@@ -2,7 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { TrendingUp, Clock, Zap, Target } from "lucide-react";
 
-const HiddenCostSection = () => {
+const SeoNotaCampaignSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -68,9 +68,9 @@ const HiddenCostSection = () => {
             <span className="text-orange-400">IT’S OWNERSHIP.</span>
           </h2>
 
-          <p className="text-gray-400 text-base max-w-2xl mx-auto">
+          {/* <p className="text-gray-400 text-base max-w-2xl mx-auto">
             Paid ads are rent. SEO builds long-term digital assets that generate traffic and leads 24/7.
-          </p>
+          </p> */}
         </motion.div>
 
         {/* 🔥 SAME CIRCLE DESIGN (CONTENT UPDATED) */}
@@ -126,4 +126,4 @@ const HiddenCostSection = () => {
   );
 };
 
-export default HiddenCostSection;
+export default SeoNotaCampaignSection;

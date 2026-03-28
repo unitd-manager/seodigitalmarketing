@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
 import SkepticismSection from "@/components/SkepticismSection";
-import HiddenCostSection from "@/components/HiddenCostSection";
+import SeoNotaCampaignSection from "@/components/SeoNotaCampaignSection";
 import TimelineSection from "@/components/TimelineSection";
 import FrameworkSection from "@/components/FrameworkSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -19,7 +19,7 @@ const Index = () => {
         <HeroSection />
         <ProblemSection />
         <SkepticismSection />
-        <HiddenCostSection />
+        <SeoNotaCampaignSection />
         <TimelineSection />
         <FrameworkSection />
         <TestimonialsSection />
