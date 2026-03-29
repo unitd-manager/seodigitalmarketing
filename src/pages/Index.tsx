@@ -10,6 +10,7 @@ import VisionSection from "@/components/VisionSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
+import HiddenCostSection from "@/components/HiddenCostSection";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
         <ProblemSection />
         <SkepticismSection />
         <SeoNotaCampaignSection />
+        <HiddenCostSection />
         <TimelineSection />
         <FrameworkSection />
         <TestimonialsSection />

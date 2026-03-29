@@ -7,20 +7,27 @@ const testimonials = [
     name: "Michael Torres",
     location: "Austin, TX",
     role: "CEO, Torres Financial Group",
-    quote: "Within 6 months, our organic traffic grew 210%. More importantly, qualified leads increased by 340%. RankDominance doesn't just get rankings — they get results.",
+    quote: "Within 6 months, our organic traffic tripled and we're ranking #1 for our highest revenue keywords.",
   },
   {
     name: "Sarah Mitchell",
     location: "Denver, CO",
     role: "Founder, Mitchell & Co.",
-    quote: "We'd been burned by two agencies before. RankDominance was transparent from day one. Now we're #1 for our most valuable keywords and our pipeline has never been stronger.",
+    quote: "From page 5 to page 1. Our phone hasn’t stopped ringing.",
   },
   {
     name: "David Chen",
     location: "San Diego, CA",
     role: "VP Marketing, Chen Medical",
-    quote: "The ROI speaks for itself — 5.2x return in year one. Their team operates like an extension of ours. I wish we'd started sooner.",
+    quote: "400% increase in qualified leads. The ROI speaks for itself.",
   },
+];
+
+const stats = [
+  { value: "+187%", label: "Organic Traffic Growth" },
+  { value: "3X", label: "Lead Increase" },
+  { value: "92%", label: "Client Retention" },
+  { value: "4:1", label: "Average ROI" },
 ];
 
 const TestimonialsSection = () => {
@@ -28,21 +35,54 @@ const TestimonialsSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="results" className="py-24 lg:py-32 relative" ref={ref}>
-      <div className="absolute inset-0 bg-secondary/30" />
+    <section
+      id="results"
+      className="py-24 lg:py-32 relative bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#0f0f0f]"
+      ref={ref}
+    >
+      {/* Overlay shimmer gradient for subtle movement */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-primary/10 animate-pulse" />
+
       <div className="section-container relative">
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Proven Results</span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 text-foreground">
-            Real Clients. Real Revenue.
+           <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 text-foreground">
+              Proven Results
           </h2>
+          <h2 className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">
+          Real Clients. Real Revenue.
+          </h2>
+         
         </motion.div>
 
+        {/* Stats Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="rounded-xl p-6 text-center 
+                         bg-gradient-to-tr from-[#1a1a1a] via-[#2c2c2c] to-[#1a1a1a] 
+                         shadow-[0_0_20px_rgba(255,215,0,0.6)] 
+                         hover:shadow-[0_0_35px_rgba(255,215,0,0.9)] 
+                         transition-all duration-500"
+            >
+              <div className="font-display text-3xl md:text-4xl font-bold text-primary">
+                {s.value}
+              </div>
+              <div className="text-sm text-muted-foreground mt-2">{s.label}</div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Testimonials Section */}
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <motion.div
@@ -50,14 +90,20 @@ const TestimonialsSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="gradient-card rounded-xl p-8 flex flex-col"
+              className="rounded-xl p-8 flex flex-col 
+                         bg-gradient-to-tr from-[#1a1a1a] via-[#2c2c2c] to-[#1a1a1a] 
+                         shadow-[0_0_20px_rgba(255,215,0,0.6)] 
+                         hover:shadow-[0_0_35px_rgba(255,215,0,0.9)] 
+                         transition-all duration-500"
             >
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, j) => (
                   <Star key={j} className="w-4 h-4 fill-primary text-primary" />
                 ))}
               </div>
-              <p className="text-secondary-foreground leading-relaxed mb-6 flex-1">"{t.quote}"</p>
+              <p className="text-secondary-foreground leading-relaxed mb-6 flex-1">
+                "{t.quote}"
+              </p>
               <div>
                 <div className="font-display font-bold text-foreground">{t.name}</div>
                 <div className="text-sm text-muted-foreground">{t.role}</div>
