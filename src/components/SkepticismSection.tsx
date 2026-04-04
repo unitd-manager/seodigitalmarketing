@@ -10,49 +10,45 @@ const objections = [
 
 const SkepticismSection = () => {
   return (
-    <section className="py-24 bg-[#0B0F19] relative overflow-hidden">
+    <section className="py-24 bg-background relative overflow-hidden">
 
       {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-orange-500/10 blur-[120px] rounded-full"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-primary/10 blur-[120px] rounded-full"></div>
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+      <div className="section-container relative z-10 grid md:grid-cols-2 gap-12 items-center">
 
         {/* LEFT CONTENT */}
         <div>
-          <h3 className="text-orange-400 font-semibold text-lg mb-3">
+          <h3 className="text-primary font-semibold text-lg mb-3">
             The Concern
           </h3>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground leading-tight mb-4">
             Why Most Businesses Hesitate to Invest in SEO
           </h2>
 
-          <p className="text-gray-400 mb-6">
-            Let’s address the real concern. These are the exact thoughts most business owners have before investing in SEO.
+          <p className="text-muted-foreground mb-6">
+            Let's address the real concern. These are the exact thoughts most business owners have before investing in SEO.
           </p>
 
           {/* Statement Boxes */}
           <div className="space-y-4">
-
-            {/* Box 1 */}
-            <div className="relative inline-block px-6 py-4 rounded-xl border border-orange-400/30 bg-orange-500/10 backdrop-blur">
-              <p className="text-white font-medium">
+            <div className="relative inline-block px-6 py-4 rounded-xl border border-primary/30 bg-primary/10 backdrop-blur">
+              <p className="text-foreground font-medium">
                 That skepticism makes sense.
               </p>
-              <div className="absolute inset-0 blur-xl bg-orange-500/20 -z-10 rounded-xl"></div>
+              <div className="absolute inset-0 blur-xl bg-primary/10 -z-10 rounded-xl"></div>
             </div>
 
-            {/* Box 2 */}
-            <div className="relative inline-block px-6 py-4 rounded-xl border border-orange-400/30 bg-orange-500/10 backdrop-blur">
-              <p className="text-white font-semibold text-center">
+            <div className="relative inline-block px-6 py-4 rounded-xl border border-primary/30 bg-primary/10 backdrop-blur">
+              <p className="text-foreground font-semibold text-center">
                 Most SEO agencies sell rankings.
               </p>
-              <p className="text-orange-400 font-semibold text-center mt-1">
+              <p className="text-primary font-semibold text-center mt-1">
                 We build revenue assets.
               </p>
-              <div className="absolute inset-0 blur-xl bg-orange-500/20 -z-10 rounded-xl"></div>
+              <div className="absolute inset-0 blur-xl bg-primary/10 -z-10 rounded-xl"></div>
             </div>
-
           </div>
         </div>
 
@@ -66,15 +62,12 @@ const SkepticismSection = () => {
               transition={{ delay: i * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.03 }}
-              className="group flex items-center justify-center gap-4 p-5 rounded-xl bg-[#0f172a] border border-gray-800 hover:border-orange-400/40 transition"
+              className="group flex items-center justify-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/40 transition"
             >
-              {/* Icon */}
-              <div className="p-2.5 rounded-lg bg-orange-600/20 group-hover:bg-orange-600/30 transition">
-                <item.icon className="w-5 h-5 text-orange-400" />
+              <div className="p-2.5 rounded-lg bg-primary/20 group-hover:bg-primary/30 transition">
+                <item.icon className="w-5 h-5 text-primary" />
               </div>
-
-              {/* Text */}
-              <p className="text-gray-300 text-sm text-left w-full">
+              <p className="text-secondary-foreground text-sm text-left w-full">
                 {item.text}
               </p>
             </motion.div>
@@ -82,9 +75,6 @@ const SkepticismSection = () => {
         </div>
 
       </div>
-
-      {/* Bottom Highlight */}
-     
     </section>
   );
 };

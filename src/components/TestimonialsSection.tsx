@@ -13,7 +13,7 @@ const testimonials = [
     name: "Sarah Mitchell",
     location: "Denver, CO",
     role: "Founder, Mitchell & Co.",
-    quote: "From page 5 to page 1. Our phone hasn’t stopped ringing.",
+    quote: "From page 5 to page 1. Our phone hasn't stopped ringing.",
   },
   {
     name: "David Chen",
@@ -37,11 +37,11 @@ const TestimonialsSection = () => {
   return (
     <section
       id="results"
-      className="py-24 lg:py-32 relative bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#0f0f0f]"
+      className="py-24 lg:py-32 relative bg-gradient-to-br from-background via-secondary to-background"
       ref={ref}
     >
-      {/* Overlay shimmer gradient for subtle movement */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-primary/10 animate-pulse" />
+      {/* Overlay shimmer */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-primary/5 animate-pulse" />
 
       <div className="section-container relative">
         {/* Heading */}
@@ -51,16 +51,15 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-           <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 text-foreground">
-              Proven Results
+          <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 text-foreground">
+            Proven Results
           </h2>
           <h2 className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">
-          Real Clients. Real Revenue.
+            Real Clients. Real Revenue.
           </h2>
-         
         </motion.div>
 
-        {/* Stats Section */}
+        {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {stats.map((s, i) => (
             <motion.div
@@ -68,13 +67,9 @@ const TestimonialsSection = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-xl p-6 text-center 
-                         bg-gradient-to-tr from-[#1a1a1a] via-[#2c2c2c] to-[#1a1a1a] 
-                         shadow-[0_0_20px_rgba(255,215,0,0.6)] 
-                         hover:shadow-[0_0_35px_rgba(255,215,0,0.9)] 
-                         transition-all duration-500"
+              className="rounded-xl p-6 text-center gradient-card hover:shadow-lg hover:shadow-primary/20 transition-all duration-500"
             >
-              <div className="font-display text-3xl md:text-4xl font-bold text-primary">
+              <div className="font-display text-3xl md:text-4xl font-bold text-primary stat-glow">
                 {s.value}
               </div>
               <div className="text-sm text-muted-foreground mt-2">{s.label}</div>
@@ -82,7 +77,7 @@ const TestimonialsSection = () => {
           ))}
         </div>
 
-        {/* Testimonials Section */}
+        {/* Testimonials */}
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <motion.div
@@ -90,11 +85,7 @@ const TestimonialsSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="rounded-xl p-8 flex flex-col 
-                         bg-gradient-to-tr from-[#1a1a1a] via-[#2c2c2c] to-[#1a1a1a] 
-                         shadow-[0_0_20px_rgba(255,215,0,0.6)] 
-                         hover:shadow-[0_0_35px_rgba(255,215,0,0.9)] 
-                         transition-all duration-500"
+              className="rounded-xl p-8 flex flex-col gradient-card hover:shadow-lg hover:shadow-primary/20 transition-all duration-500"
             >
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, j) => (

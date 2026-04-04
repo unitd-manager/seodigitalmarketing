@@ -11,12 +11,10 @@ const stats = [
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Subtle gradient orb */}
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
 
       <div className="section-container w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -52,7 +50,6 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Right - Stats Card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -96,7 +93,6 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Trust Bar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -3,8 +3,6 @@ import { useRef } from "react";
 
 const HiddenCostSection = () => {
   const ref = useRef(null);
-
-  // ✅ FIXED: use 'margin' instead of 'rootMargin'
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const points = [
@@ -33,14 +31,14 @@ const HiddenCostSection = () => {
           </p>
         </motion.div>
 
-        {/* Central Yellow Outlined Box */}
+        {/* Central Box */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-3xl mx-auto rounded-2xl p-10 border-2 border-yellow-400 bg-background shadow-lg"
+          className="max-w-3xl mx-auto rounded-2xl p-10 border-2 border-primary bg-card shadow-lg"
         >
-          <h3 className="text-center text-yellow-700 font-display font-bold text-xl mb-8">
+          <h3 className="text-center text-primary font-display font-bold text-xl mb-8">
             Every Month You Delay:
           </h3>
 
@@ -53,7 +51,7 @@ const HiddenCostSection = () => {
                 transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
                 className="flex items-start gap-3"
               >
-                <span className="text-yellow-600 shrink-0 mt-1">•</span>
+                <span className="text-primary shrink-0 mt-1">•</span>
                 {item}
               </motion.li>
             ))}

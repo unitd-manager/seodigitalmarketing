@@ -26,7 +26,6 @@ const HowItWorksSection = () => {
           ⚡ How It Works
         </motion.h2>
 
-        {/* Highlighted tagline */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -44,19 +43,14 @@ const HowItWorksSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="relative rounded-2xl p-8 text-center bg-background border border-border shadow-md hover:shadow-xl transition group"
+              className="relative rounded-2xl p-8 text-center bg-card border border-border shadow-md hover:shadow-xl hover:shadow-primary/10 transition group"
             >
-              {/* Step Number */}
               <div className="text-5xl font-display font-extrabold text-primary/30 mb-4">
                 {s.step}
               </div>
-
-              {/* Icon */}
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
                 <s.icon className="w-6 h-6 text-primary" />
               </div>
-
-              {/* Title */}
               <h3 className="font-display font-bold text-lg text-foreground">
                 {s.title}
               </h3>
