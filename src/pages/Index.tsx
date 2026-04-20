@@ -11,6 +11,7 @@ import HowItWorksSection from "@/components/HowItWorksSection";
 import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
 import HiddenCostSection from "@/components/HiddenCostSection";
+import PricingSection from "@/components/PricingSection";
 
 const Index = () => {
   return (
@@ -27,6 +28,7 @@ const Index = () => {
         <TestimonialsSection />
         <VisionSection />
         <HowItWorksSection />
+        <PricingSection />
         <FinalCTASection />
       </main>
       <Footer />

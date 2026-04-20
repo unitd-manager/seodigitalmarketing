@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useCart } from "@/context/CartContext";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { cartCount } = useCart();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -20,15 +27,18 @@ const Header = () => {
       }`}
     >
       <div className="section-container flex items-center justify-between h-16 lg:h-20">
-        <div className="flex items-center gap-2">
+        <button
+          onClick={() => navigate("/")}
+          className="flex items-center gap-2"
+        >
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center font-display font-bold text-primary-foreground text-sm">
             R
           </div>
           <span className="font-display font-bold text-lg text-foreground">RankDominance</span>
-        </div>
+        </button>
 
         <nav className="hidden md:flex items-center gap-8">
-          {["Services", "Results", "Process", "About"].map((item) => (
+          {isHome && ["Services", "Results", "Process", "About"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -37,14 +47,47 @@ const Header = () => {
               {item}
             </a>
           ))}
+          {isHome && (
+            <a
+              href="#pricing"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors tracking-wider uppercase"
+            >
+              Pricing
+            </a>
+          )}
+          <button
+            onClick={() => navigate("/packages")}
+            className={`text-sm tracking-wider uppercase transition-colors ${
+              location.pathname === "/packages"
+                ? "text-primary font-semibold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Packages
+          </button>
         </nav>
 
-        <a
-          href="#cta"
-          className="glow-button bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
-        >
-          Book a Call
-        </a>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate("/cart")}
+            className="relative w-10 h-10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+            aria-label="Cart"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
+          <a
+            href={isHome ? "#cta" : "/packages"}
+            className="glow-button bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
+          >
+            Book a Call
+          </a>
+        </div>
       </div>
     </motion.header>
   );
