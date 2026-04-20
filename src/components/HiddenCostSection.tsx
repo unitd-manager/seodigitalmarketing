@@ -13,14 +13,14 @@ const HiddenCostSection = () => {
   ];
 
   return (
-    <section className="py-28 lg:py-36 bg-background relative" ref={ref}>
+    <section className="bg-background relative" ref={ref}>
       <div className="section-container">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">
             The Hidden Cost of Waiting

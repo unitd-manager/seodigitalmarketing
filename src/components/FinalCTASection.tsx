@@ -7,7 +7,7 @@ const FinalCTASection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="cta" className="py-24 lg:py-32" ref={ref}>
+    <section id="cta" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

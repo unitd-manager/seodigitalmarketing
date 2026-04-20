@@ -10,7 +10,7 @@ const stats = [
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-0 overflow-hidden hero-section">
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
 
       <div className="section-container w-full">
@@ -93,21 +93,6 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-20 pt-12 border-t border-border text-center"
-        >
-          <p className="text-xs tracking-[0.25em] uppercase text-muted-foreground mb-6">
-            Trusted by Forward-Thinking Brands
-          </p>
-          <div className="flex flex-wrap justify-center gap-10 text-muted-foreground/50 font-display text-lg font-semibold">
-            {["Stripe", "Vercel", "Linear", "Notion", "Figma", "Webflow"].map((brand) => (
-              <span key={brand}>{brand}</span>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

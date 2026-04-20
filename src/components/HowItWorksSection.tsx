@@ -14,7 +14,7 @@ const HowItWorksSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="process" className="py-28 lg:py-36 relative bg-gradient-to-b from-background via-secondary/20 to-background" ref={ref}>
+    <section id="process" className="relative bg-gradient-to-b from-background via-secondary/20 to-background" ref={ref}>
       <div className="section-container relative">
         {/* Heading */}
         <motion.h2
@@ -30,7 +30,7 @@ const HowItWorksSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-center mb-20 max-w-3xl mx-auto font-display text-xl md:text-2xl font-bold text-foreground bg-primary/10 px-6 py-4 rounded-lg shadow-lg"
+          className="text-center mb-16 max-w-3xl mx-auto font-display text-xl md:text-2xl font-bold text-foreground bg-primary/10 px-6 py-4 rounded-lg shadow-lg"
         >
           We handle the heavy lifting. You focus on running your business.
         </motion.p>

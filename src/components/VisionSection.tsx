@@ -15,7 +15,7 @@ const VisionSection = () => {
 
   return (
     <section
-      className="py-24 lg:py-32 relative bg-gradient-to-br from-background via-secondary to-background"
+      className="relative bg-gradient-to-br from-background via-secondary to-background"
       ref={ref}
     >
       {/* Subtle animated background */}
@@ -65,7 +65,7 @@ const VisionSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 1 }}
-          className="max-w-3xl mx-auto text-center mt-16"
+          className="max-w-3xl mx-auto text-center mt-12"
         >
           <p className="text-lg text-secondary-foreground leading-relaxed font-medium">
             SEO isn't a marketing expense — it's your long-term profit infrastructure.

@@ -10,7 +10,7 @@ const objections = [
 
 const SkepticismSection = () => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="bg-background relative overflow-hidden">
 
       {/* Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-primary/10 blur-[120px] rounded-full"></div>

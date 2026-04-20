@@ -37,7 +37,7 @@ const TimelineSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-24 lg:py-32 relative" ref={ref}>
+    <section className="relative" ref={ref}>
       <div className="absolute inset-0 bg-secondary/30" />
 
       <div className="section-container relative">
@@ -56,7 +56,7 @@ const TimelineSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-center mb-16 max-w-3xl mx-auto font-display text-xl md:text-2xl font-bold text-foreground bg-primary/10 px-6 py-4 rounded-lg shadow-md"
+          className="text-center mb-12 max-w-3xl mx-auto font-display text-xl md:text-2xl font-bold text-foreground bg-primary/10 px-6 py-4 rounded-lg shadow-md"
         >
           We don't believe in "wait and hope." You see progress indicators —
           not vague promises.
