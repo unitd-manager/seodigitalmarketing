@@ -34,7 +34,7 @@ const SeoNotaCampaignSection = () => {
 
   return (
     <section
-      className="py-24 lg:py-28 bg-gradient-to-b from-background via-secondary/20 to-background relative overflow-hidden"
+      className="bg-gradient-to-b from-background via-secondary/20 to-background relative overflow-hidden"
       ref={ref}
     >
       {/* Background Glow */}
@@ -48,13 +48,13 @@ const SeoNotaCampaignSection = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
           <h3 className="text-primary font-semibold text-lg mb-3">
             SEO Reality
           </h3>
 
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground leading-tight mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground leading-tight mb-4">
             SEO IS NOT A CAMPAIGN.
             <br />
             <span className="text-primary">IT'S OWNERSHIP.</span>
@@ -62,7 +62,7 @@ const SeoNotaCampaignSection = () => {
         </motion.div>
 
         {/* Circle Design */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-12">
           {insights.map((insight, i) => {
             const Icon = insight.icon;
             return (
@@ -72,22 +72,22 @@ const SeoNotaCampaignSection = () => {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 * i }}
                 whileHover={{ y: -6, scale: 1.03 }}
-                className="relative overflow-hidden rounded-full p-6 border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm group aspect-square flex flex-col items-center justify-center text-center"
+                className="relative overflow-hidden rounded-full p-4 md:p-6 border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm group aspect-square flex flex-col items-center justify-center text-center"
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300">
                   <div className="absolute -inset-1 bg-primary/10 blur opacity-20 rounded-full"></div>
                 </div>
 
                 <div className="relative z-10 flex flex-col items-center justify-center h-full">
-                  <div className="mb-3 p-2 bg-secondary rounded-full">
-                    <Icon className="w-5 h-5 text-primary" />
+                  <div className="mb-2 md:mb-3 p-2 bg-secondary rounded-full">
+                    <Icon className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                   </div>
 
-                  <h3 className="text-sm md:text-base font-semibold text-foreground mb-2 leading-tight">
+                  <h3 className="text-sm md:text-base font-semibold text-foreground mb-1 md:mb-2 leading-tight px-1">
                     {insight.title}
                   </h3>
 
-                  <p className="text-muted-foreground text-xs md:text-sm leading-tight px-2">
+                  <p className="text-xs md:text-sm leading-tight px-1 md:px-2 text-center">
                     {insight.description}
                   </p>
                 </div>
@@ -95,14 +95,6 @@ const SeoNotaCampaignSection = () => {
             );
           })}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center"
-        >
-        </motion.div>
 
       </div>
     </section>

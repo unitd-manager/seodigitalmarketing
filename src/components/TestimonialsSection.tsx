@@ -37,7 +37,7 @@ const TestimonialsSection = () => {
   return (
     <section
       id="results"
-      className="py-24 lg:py-32 relative bg-gradient-to-br from-background via-secondary to-background"
+      className="relative bg-gradient-to-br from-background via-secondary to-background"
       ref={ref}
     >
       {/* Overlay shimmer */}
@@ -49,7 +49,7 @@ const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 text-foreground">
             Proven Results
@@ -60,7 +60,7 @@ const TestimonialsSection = () => {
         </motion.div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}

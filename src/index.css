@@ -85,6 +85,15 @@
     @apply max-w-7xl mx-auto px-6 lg:px-8;
   }
 
+  section {
+    @apply py-6 lg:py-12;
+  }
+
+  /* Hero section has custom spacing */
+  .hero-section {
+    @apply py-0;
+  }
+
   .glass-card {
     background: hsl(220 15% 8% / 0.6);
     backdrop-filter: blur(16px);

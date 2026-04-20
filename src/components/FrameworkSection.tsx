@@ -16,7 +16,7 @@ const FrameworkSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="framework" className="py-24 lg:py-32 relative" ref={ref}>
+    <section id="framework" className="relative" ref={ref}>
       {/* Gradient background accent */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
 
@@ -26,7 +26,7 @@ const FrameworkSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.4 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 text-foreground">
             OUR REVENUE-DRIVEN SEO FRAMEWORK™

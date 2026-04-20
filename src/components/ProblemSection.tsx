@@ -21,7 +21,7 @@ export default function ProblemSection() {
   const inView = useInView(ref, { once: true });
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden" ref={ref}>
+    <section className="bg-background relative overflow-hidden" ref={ref}>
       
       {/* Background Glow */}
       <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full"></div>
@@ -33,7 +33,7 @@ export default function ProblemSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-10"
         >
           <h3 className="text-primary font-semibold text-lg mb-2">
             The Problem
@@ -86,7 +86,7 @@ export default function ProblemSection() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ delay: 0.4 }}
-          className="mt-16 text-center"
+          className="mt-12 text-center"
         >
           <div className="relative inline-block px-8 py-5 rounded-2xl border border-primary/20 glass-card">
 
