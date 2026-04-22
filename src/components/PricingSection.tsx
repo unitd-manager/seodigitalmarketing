@@ -111,14 +111,14 @@ const PricingSection = () => {
   };
 
   return (
-    <section id="pricing" className="py-24 lg:py-32" ref={ref}>
+    <section id="pricing" className="py-6 lg:py-12" ref={ref}>
       <div className="section-container">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <span className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4">
             Pricing Plans
