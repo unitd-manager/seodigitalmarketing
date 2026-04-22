@@ -11,7 +11,7 @@ export const STRIPE_PUBLISHABLE_KEY =
 export const STRIPE_PRICE_IDS = {
   starter: "price_1TOETmAUcMizv4AwiYrfVYxd",
   growth:  "price_1TOG0qAUcMizv4AwHTmxYnGB",
-  dominator: "price_1TOETmAUcMizv4AwiYrfVYxd",
+  dominator: "price_1TOG1OAUcMizv4Awr8X3KVvF",
 };
 
 // Optional: Replace with your Stripe Payment Links for a simpler flow

@@ -220,7 +220,7 @@ const PricingSection = () => {
                   </ul>
 
                   <div className="flex flex-col gap-3">
-                    <button
+                    {/* <button
                       onClick={() => handleBuyNow(pkg)}
                       className={`w-full py-3 px-6 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
                         isPopular
@@ -230,7 +230,7 @@ const PricingSection = () => {
                     >
                       Buy Now
                       <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </button> */}
 
                     <button
                       onClick={() => handleAddToCart(pkg)}

@@ -5,12 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart, type CartItem } from "@/context/CartContext";
-import { STRIPE_PAYMENT_LINKS } from "@/config/stripe";
-
-// Check if all payment links are configured
-const paymentLinksConfigured = !Object.values(STRIPE_PAYMENT_LINKS).some((v) =>
-  v.includes("REPLACE_WITH")
-);
+import { STRIPE_PRICE_IDS } from "@/config/stripe";
 
 interface BillingForm {
   name: string;
@@ -23,6 +18,29 @@ type CheckoutState = {
   buyNowItem?: Omit<CartItem, "quantity">;
 };
 
+type CheckoutSessionResponse = {
+  url?: string;
+  error?: string;
+};
+
+const parseCheckoutSessionResponse = async (response: Response) => {
+  const responseText = await response.text();
+
+  if (responseText.trimStart().startsWith("<?php")) {
+    throw new Error(
+      "Server is returning PHP source code instead of executing it. Enable PHP for create-checkout-session.php on your server."
+    );
+  }
+
+  try {
+    return JSON.parse(responseText) as CheckoutSessionResponse;
+  } catch {
+    throw new Error(
+      responseText.trim() || "Server returned an invalid response while creating Stripe checkout."
+    );
+  }
+};
+
 const Checkout = () => {
   const { items } = useCart();
   const navigate = useNavigate();
@@ -31,7 +49,13 @@ const Checkout = () => {
   const inView = useInView(ref, { once: true });
 
   const buyNowItem = (location.state as CheckoutState | null)?.buyNowItem;
-  const checkoutItems: CartItem[] = buyNowItem ? [{ ...buyNowItem, quantity: 1 }] : items;
+  // Refresh priceIds from current config — cart in localStorage may have stale values
+  const checkoutItems: CartItem[] = (buyNowItem ? [{ ...buyNowItem, quantity: 1 }] : items).map(
+    (item) => ({
+      ...item,
+      priceId: STRIPE_PRICE_IDS[item.id as keyof typeof STRIPE_PRICE_IDS] ?? item.priceId,
+    })
+  );
   const checkoutTotal = checkoutItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -52,7 +76,15 @@ const Checkout = () => {
     setError(null);
   };
 
-  const handleCheckout = (e: React.FormEvent) => {
+  const priceIdsConfigured = checkoutItems.every(
+    (item) => item.priceId && !item.priceId.includes("REPLACE_WITH")
+  );
+  const duplicatePriceIdItems = checkoutItems.filter(
+    (item, index, allItems) =>
+      allItems.findIndex((candidate) => candidate.priceId === item.priceId) !== index
+  );
+
+  const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -61,34 +93,62 @@ const Checkout = () => {
       return;
     }
 
-    if (!paymentLinksConfigured) {
+    if (!priceIdsConfigured) {
       setError(
-        "Payment Links are not configured yet. Please add your Stripe Payment Links to src/config/stripe.ts."
+        "Stripe Price IDs are not configured yet. Please add your Stripe Price IDs to src/config/stripe.ts."
       );
       return;
     }
 
-    // Redirect to Stripe payment page for the first item in checkout.
-    const firstItem = checkoutItems[0];
-    const linkKey = firstItem?.id as keyof typeof STRIPE_PAYMENT_LINKS;
-    const paymentUrl = STRIPE_PAYMENT_LINKS[linkKey];
-
-    if (!paymentUrl) {
-      setError("Could not find a payment link for the selected package.");
+    if (duplicatePriceIdItems.length > 0) {
+      const duplicatePackages = duplicatePriceIdItems.map((item) => item.name).join(", ");
+      setError(
+        `Duplicate Stripe Price IDs found for: ${duplicatePackages}. Each package must have its own Stripe recurring price ID in src/config/stripe.ts.`
+      );
       return;
     }
 
-    const url = new URL(paymentUrl);
-    url.searchParams.set("prefilled_email", form.email);
+    try {
+      const response = await fetch("/create-checkout-session.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customer: {
+            name: form.name,
+            email: form.email,
+            company: form.company,
+            country: form.country,
+          },
+          order: {
+            items: checkoutItems.map((item) => ({
+              id: item.id,
+              name: item.name,
+              priceId: item.priceId,
+              quantity: item.quantity,
+            })),
+            successUrl: `${window.location.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancelUrl: `${window.location.origin}/checkout`,
+          },
+        }),
+      });
 
-    // Tell Stripe where to redirect after successful payment
-    const successUrl = `${window.location.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
-    url.searchParams.set("success_url", successUrl);
+      const data = await parseCheckoutSessionResponse(response);
 
-    // Used by the success page to ensure cart clears only after verified success.
-    sessionStorage.setItem("stripe_checkout_pending", "1");
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "Could not create Stripe checkout session.");
+      }
 
-    window.location.href = url.toString();
+      sessionStorage.setItem("stripe_checkout_pending", "1");
+      window.location.href = data.url;
+    } catch (checkoutError) {
+      setError(
+        checkoutError instanceof Error
+          ? checkoutError.message
+          : "Could not start Stripe checkout."
+      );
+    }
   };
 
   if (checkoutItems.length === 0) {
@@ -139,7 +199,7 @@ const Checkout = () => {
             </h1>
 
             {/* Setup instructions banner */}
-            {!paymentLinksConfigured && (
+            {!priceIdsConfigured && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -148,25 +208,25 @@ const Checkout = () => {
                 <div className="flex items-start gap-3 mb-3">
                   <AlertCircle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
                   <p className="font-semibold text-yellow-300">
-                    Action required: Add your Stripe Payment Links
+                    Action required: Add your Stripe Price IDs
                   </p>
                 </div>
                 <ol className="text-yellow-200/80 space-y-1.5 pl-8 list-decimal">
                   <li>
                     Go to{" "}
                     <a
-                      href="https://dashboard.stripe.com/payment-links"
+                      href="https://dashboard.stripe.com/products"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline inline-flex items-center gap-1 hover:text-yellow-200"
                     >
-                      Stripe Dashboard → Payment Links
+                      Stripe Dashboard → Products
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </li>
-                  <li>Create one Payment Link per package — set each as a <strong>subscription</strong></li>
-                  <li>Copy each <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">https://buy.stripe.com/…</code> URL</li>
-                  <li>Paste them into <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">src/config/stripe.ts</code> under <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">STRIPE_PAYMENT_LINKS</code></li>
+                  <li>Create one recurring price for each package in Stripe.</li>
+                  <li>Copy each <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">price_...</code> value.</li>
+                  <li>Paste them into <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">src/config/stripe.ts</code> under <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">STRIPE_PRICE_IDS</code>.</li>
                 </ol>
               </motion.div>
             )}

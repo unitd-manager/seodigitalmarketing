@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, AlertCircle } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -32,12 +32,25 @@ const CheckoutSuccess = () => {
     pending && (hasStripeSuccessSignal || location.pathname === "/checkout/success")
   );
   const [isVerifiedSuccess] = useState(verifiedSuccessOnLoad);
+  const emailSentRef = useRef(false);
 
   useEffect(() => {
     if (!isVerifiedSuccess) return;
     clearCart();
     sessionStorage.removeItem("stripe_checkout_pending");
   }, [isVerifiedSuccess, clearCart]);
+
+  useEffect(() => {
+    if (!isVerifiedSuccess || !sessionId || emailSentRef.current) return;
+    emailSentRef.current = true;
+    fetch("/send-confirmation.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId }),
+    }).catch(() => {
+      // Email errors are non-fatal — order is already complete
+    });
+  }, [isVerifiedSuccess, sessionId]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

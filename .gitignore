@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+stripe-config.php
+public/stripe-config.php
 
 # Editor directories and files
 .vscode/*
