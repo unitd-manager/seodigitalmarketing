@@ -265,7 +265,7 @@ HTML;
     sendSmtpEmail($customerEmail, $customerName, $subject, $html, $fromName, $fromEmail, $adminEmail);
 }
 
-// ── Admin notification email ──────────────────────────────────────────────────
+// ── Admin notification email ────────────────────────────────────────────────── 
 $companyDisplay = $customerCompany ?: $customerName;
 $adminSubject   = "New SEO Order" . ($companyDisplay ? " from {$companyDisplay}" : '');
 
