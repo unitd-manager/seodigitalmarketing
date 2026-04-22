@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
@@ -14,6 +16,18 @@ import HiddenCostSection from "@/components/HiddenCostSection";
 import PricingSection from "@/components/PricingSection";
 
 const Index = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash !== "#pricing") return;
+
+    // Wait one frame so sections are painted before scrolling.
+    requestAnimationFrame(() => {
+      const section = document.getElementById("pricing");
+      section?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [location.hash]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />

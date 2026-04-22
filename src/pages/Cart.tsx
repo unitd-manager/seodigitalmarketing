@@ -38,7 +38,7 @@ const Cart = () => {
                   Browse our SEO packages and add one to get started.
                 </p>
                 <button
-                  onClick={() => navigate("/packages")}
+                  onClick={() => navigate({ pathname: "/", hash: "#pricing" })}
                   className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-semibold text-sm hover:bg-primary/90 transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -91,7 +91,7 @@ const Cart = () => {
                   ))}
 
                   <button
-                    onClick={() => navigate("/packages")}
+                    onClick={() => navigate({ pathname: "/", hash: "#pricing" })}
                     className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mt-2"
                   >
                     <ArrowLeft className="w-4 h-4" />
@@ -149,7 +149,7 @@ const Cart = () => {
                     <div className="mt-5 pt-4 border-t border-border text-xs text-muted-foreground space-y-1.5">
                       <p>🔒 Secure checkout powered by Stripe</p>
                       <p>✓ 256-bit SSL encryption</p>
-                      <p>✓ 30-day money-back guarantee</p>
+                      {/* <p>✓ 30-day money-back guarantee</p> */}
                     </div>
                   </div>
                 </div>

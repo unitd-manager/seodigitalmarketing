@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ShieldCheck, Lock, ArrowLeft, CreditCard, AlertCircle, CheckCircle2, ExternalLink } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useCart } from "@/context/CartContext";
+import { useCart, type CartItem } from "@/context/CartContext";
 import { STRIPE_PAYMENT_LINKS } from "@/config/stripe";
 
 // Check if all payment links are configured
@@ -19,11 +19,23 @@ interface BillingForm {
   country: string;
 }
 
+type CheckoutState = {
+  buyNowItem?: Omit<CartItem, "quantity">;
+};
+
 const Checkout = () => {
-  const { items, cartTotal, clearCart } = useCart();
+  const { items } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
+
+  const buyNowItem = (location.state as CheckoutState | null)?.buyNowItem;
+  const checkoutItems: CartItem[] = buyNowItem ? [{ ...buyNowItem, quantity: 1 }] : items;
+  const checkoutTotal = checkoutItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   const [form, setForm] = useState<BillingForm>({
     name: "",
@@ -56,8 +68,8 @@ const Checkout = () => {
       return;
     }
 
-    // Redirect to the payment link of the first cart item
-    const firstItem = items[0];
+    // Redirect to Stripe payment page for the first item in checkout.
+    const firstItem = checkoutItems[0];
     const linkKey = firstItem?.id as keyof typeof STRIPE_PAYMENT_LINKS;
     const paymentUrl = STRIPE_PAYMENT_LINKS[linkKey];
 
@@ -70,16 +82,16 @@ const Checkout = () => {
     url.searchParams.set("prefilled_email", form.email);
 
     // Tell Stripe where to redirect after successful payment
-    const successUrl = `${window.location.origin}/checkout/success`;
+    const successUrl = `${window.location.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
     url.searchParams.set("success_url", successUrl);
 
-    // Fallback flag: if Stripe doesn't use success_url, detect referrer on return
+    // Used by the success page to ensure cart clears only after verified success.
     sessionStorage.setItem("stripe_checkout_pending", "1");
 
     window.location.href = url.toString();
   };
 
-  if (items.length === 0) {
+  if (checkoutItems.length === 0) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Header />
@@ -114,11 +126,11 @@ const Checkout = () => {
             transition={{ duration: 0.5 }}
           >
             <button
-              onClick={() => navigate("/cart")}
+              onClick={() => navigate(buyNowItem ? "/packages" : "/cart")}
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Cart
+              {buyNowItem ? "Back to Packages" : "Back to Cart"}
             </button>
 
             <h1 className="font-display text-3xl font-bold mb-8 flex items-center gap-3">
@@ -275,7 +287,7 @@ const Checkout = () => {
                   className="glow-button w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl font-bold text-base flex items-center justify-center gap-3 hover:bg-primary/90 transition-all"
                 >
                   <Lock className="w-5 h-5" />
-                  Pay ${cartTotal.toLocaleString()} / mo with Stripe
+                  Pay ${checkoutTotal.toLocaleString()} / mo with Stripe
                   <ExternalLink className="w-4 h-4 opacity-70" />
                 </button>
               </form>
@@ -288,7 +300,7 @@ const Checkout = () => {
                   </h2>
 
                   <div className="space-y-3 mb-4">
-                    {items.map((item) => (
+                    {checkoutItems.map((item) => (
                       <div key={item.id} className="flex justify-between text-sm">
                         <span className="text-muted-foreground">
                           {item.name} Plan × {item.quantity}
@@ -304,7 +316,7 @@ const Checkout = () => {
                     <div className="flex justify-between font-bold">
                       <span>Total</span>
                       <span className="text-primary text-lg">
-                        ${cartTotal.toLocaleString()} / mo
+                        ${checkoutTotal.toLocaleString()} / mo
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">
@@ -321,14 +333,14 @@ const Checkout = () => {
                       <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
                       PCI DSS compliant via Stripe
                     </div>
-                    <div className="flex items-center gap-2">
+                    {/* <div className="flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
                       30-day money-back guarantee
-                    </div>
-                    <div className="flex items-center gap-2">
+                    </div> */}
+                    {/* <div className="flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
                       Cancel subscription anytime
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="mt-5 pt-4 border-t border-border">

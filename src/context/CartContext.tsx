@@ -38,10 +38,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setItems((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       if (existing) {
-        // Replace existing package (only one of each type)
-        return prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
+        return prev;
       }
       return [...prev, { ...item, quantity: 1 }];
     });

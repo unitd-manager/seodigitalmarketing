@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Check, ShoppingCart, Zap, TrendingUp, Crown, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
@@ -81,9 +81,8 @@ const packages = [
 ];
 
 const PricingSection = () => {
-  const { addToCart, cartCount } = useCart();
+  const { addToCart, cartCount, items } = useCart();
   const navigate = useNavigate();
-  const [addedId, setAddedId] = useState<string | null>(null);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -95,19 +94,20 @@ const PricingSection = () => {
       billing: pkg.billing,
       priceId: pkg.priceId,
     });
-    setAddedId(pkg.id);
-    setTimeout(() => setAddedId(null), 2000);
   };
 
   const handleBuyNow = (pkg: (typeof packages)[0]) => {
-    addToCart({
-      id: pkg.id,
-      name: pkg.name,
-      price: pkg.price,
-      billing: pkg.billing,
-      priceId: pkg.priceId,
+    navigate("/checkout", {
+      state: {
+        buyNowItem: {
+          id: pkg.id,
+          name: pkg.name,
+          price: pkg.price,
+          billing: pkg.billing,
+          priceId: pkg.priceId,
+        },
+      },
     });
-    navigate("/checkout");
   };
 
   return (
@@ -148,7 +148,7 @@ const PricingSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {packages.map((pkg, i) => {
             const Icon = pkg.icon;
-            const isAdded = addedId === pkg.id;
+            const isAdded = items.some((item) => item.id === pkg.id);
             const isPopular = pkg.badge === "Most Popular";
 
             return (
@@ -234,14 +234,15 @@ const PricingSection = () => {
 
                     <button
                       onClick={() => handleAddToCart(pkg)}
+                      disabled={isAdded}
                       className={`w-full py-3 px-6 rounded-xl text-sm font-semibold border transition-all duration-200 flex items-center justify-center gap-2 ${
                         isAdded
-                          ? "border-green-500 text-green-400 bg-green-500/10"
+                          ? "cursor-not-allowed border-green-500 text-green-400 bg-green-500/10"
                           : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
                       }`}
                     >
                       <ShoppingCart className="w-4 h-4" />
-                      {isAdded ? "Added to Cart ✓" : "Add to Cart"}
+                      {isAdded ? "Already in Cart ✓" : "Add to Cart"}
                     </button>
                   </div>
                 </div>

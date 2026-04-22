@@ -55,7 +55,7 @@ const Header = () => {
               Pricing
             </a>
           )}
-          <button
+          {/* <button
             onClick={() => navigate("/packages")}
             className={`text-sm tracking-wider uppercase transition-colors ${
               location.pathname === "/packages"
@@ -64,7 +64,7 @@ const Header = () => {
             }`}
           >
             Packages
-          </button>
+          </button> */}
         </nav>
 
         <div className="flex items-center gap-3">

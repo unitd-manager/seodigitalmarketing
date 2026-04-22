@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Check, ShoppingCart, Zap, TrendingUp, Crown, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
@@ -91,20 +91,19 @@ const packages = [
 const PackageCard = ({
   pkg,
   index,
-  addedId,
+  isAdded,
   onAddToCart,
   onBuyNow,
 }: {
   pkg: (typeof packages)[0];
   index: number;
-  addedId: string | null;
+  isAdded: boolean;
   onAddToCart: (pkg: (typeof packages)[0]) => void;
   onBuyNow: (pkg: (typeof packages)[0]) => void;
 }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const Icon = pkg.icon;
-  const isAdded = addedId === pkg.id;
   const isPopular = pkg.badge === "Most Popular";
 
   return (
@@ -179,14 +178,15 @@ const PackageCard = ({
 
           <button
             onClick={() => onAddToCart(pkg)}
+            disabled={isAdded}
             className={`w-full py-3 px-6 rounded-xl text-sm font-semibold border transition-all duration-200 flex items-center justify-center gap-2 ${
               isAdded
-                ? "border-green-500 text-green-400 bg-green-500/10"
+                ? "cursor-not-allowed border-green-500 text-green-400 bg-green-500/10"
                 : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
             }`}
           >
             <ShoppingCart className="w-4 h-4" />
-            {isAdded ? "Added to Cart ✓" : "Add to Cart"}
+            {isAdded ? "Already in Cart ✓" : "Add to Cart"}
           </button>
         </div>
       </div>
@@ -195,9 +195,8 @@ const PackageCard = ({
 };
 
 const Packages = () => {
-  const { addToCart, cartCount } = useCart();
+  const { addToCart, cartCount, items } = useCart();
   const navigate = useNavigate();
-  const [addedId, setAddedId] = useState<string | null>(null);
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true });
 
@@ -209,8 +208,6 @@ const Packages = () => {
       billing: pkg.billing,
       priceId: pkg.priceId,
     });
-    setAddedId(pkg.id);
-    setTimeout(() => setAddedId(null), 2000);
   };
 
   const handleBuyNow = (pkg: (typeof packages)[0]) => {
@@ -268,7 +265,7 @@ const Packages = () => {
                 key={pkg.id}
                 pkg={pkg}
                 index={i}
-                addedId={addedId}
+                isAdded={items.some((item) => item.id === pkg.id)}
                 onAddToCart={handleAddToCart}
                 onBuyNow={handleBuyNow}
               />
