@@ -10,11 +10,16 @@ const stats = [
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-0 overflow-hidden hero-section">
+    /* CHANGE: Removed flex and items-center. 
+       Used pt-32 (top padding for nav) and pb-16 (bottom padding).
+    */
+    <section className="relative w-full pt-8 pb-16 overflow-hidden hero-section">
+      {/* Background Glow */}
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
 
       <div className="section-container w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        {/* Main Grid */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -33,7 +38,7 @@ const HeroSection = () => {
               If your competitors rank above you, they're taking your customers. We help US businesses dominate page one using revenue-focused SEO strategies designed to generate measurable ROI — not empty rankings.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-wrap gap-4">
               <a
                 href="#cta"
                 className="glow-button inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl text-base font-semibold"
@@ -50,6 +55,7 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
+          {/* Stats Card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -58,17 +64,12 @@ const HeroSection = () => {
           >
             <div className="grid grid-cols-2 gap-8">
               {stats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-                >
+                <div key={stat.label}>
                   <div className="text-3xl lg:text-4xl font-display font-bold text-primary stat-glow">
                     {stat.value}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -93,6 +94,26 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
+        {/* CHANGE: This section now has a specific margin-top (mt-16) 
+           instead of being pushed down by flex-grow.
+        */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-8">
+            Trusted by Enterprise Brands Worldwide
+          </p>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-muted-foreground/40 font-display text-lg font-semibold">
+            {["Qbotica", "Newme", "Juspredict", "Axyo"].map((brand) => (
+              <span key={brand} className="hover:text-muted-foreground transition-colors">
+                {brand}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
