@@ -32,9 +32,9 @@ const Header = () => {
           className="flex items-center gap-2"
         >
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center font-display font-bold text-primary-foreground text-sm">
-            R
+            UTS
           </div>
-          <span className="font-display font-bold text-lg text-foreground">RankDominance</span>
+          <span className="font-display font-bold text-lg text-foreground">United Technologies Solutions</span>
         </button>
 
         <nav className="hidden md:flex items-center gap-8">
