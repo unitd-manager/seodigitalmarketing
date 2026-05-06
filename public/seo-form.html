@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SEO Audit Form</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #111827;
+      padding: 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+    }
+
+    button {
+  display: block;
+  width: auto;
+  padding: 10px 24px;
+  margin: 20px auto 0;
+  background: #facc15;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+    button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Get Your Free SEO Audit Report</h2>
+    <p>Enter your details and we’ll send your SEO report within 24 hours.</p>
+
+    <form onsubmit="handleSubmit(event)">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="text" id="website" placeholder="Website URL" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+
+      <button type="submit">Get My Report</button>
+    </form>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        website: document.getElementById("website").value,
+        email: document.getElementById("email").value
+      };
+
+      console.log("Form Data:", data);
+
+      alert("Form submitted successfully!");
+
+      // Clear form
+      e.target.reset();
+    }
+  </script>
+
+</body>
+</html>

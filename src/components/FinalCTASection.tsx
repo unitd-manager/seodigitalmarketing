@@ -25,14 +25,16 @@ const FinalCTASection = () => {
           </p>
 
           <motion.a
-            href="#"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="glow-button animate-glow-pulse inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-5 rounded-xl text-lg font-bold"
-          >
-            Start My Growth Strategy
-            <ArrowUpRight className="w-5 h-5" />
-          </motion.a>
+  href="https://calendar.app.google/FR6cLZASpaqTPHRV6"
+  target="_blank"
+  rel="noopener noreferrer"
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.98 }}
+  className="glow-button animate-glow-pulse inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-5 rounded-xl text-lg font-bold"
+>
+  Start My Growth Strategy
+  <ArrowUpRight className="w-5 h-5" />
+</motion.a>
 
           <p className="text-sm text-muted-foreground mt-6">Free consultation · No commitment · Results guaranteed</p>
         </motion.div>

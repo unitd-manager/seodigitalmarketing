@@ -82,11 +82,13 @@ const Header = () => {
           </button>
 
           <a
-            href={isHome ? "#cta" : "/packages"}
-            className="glow-button bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
-          >
-            Book a Call
-          </a>
+  href="https://calendar.app.google/FR6cLZASpaqTPHRV6"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="glow-button bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
+>
+  Book a Call
+</a>
         </div>
       </div>
     </motion.header>
