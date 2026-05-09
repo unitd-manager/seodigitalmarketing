@@ -72,7 +72,7 @@
 
     <form onsubmit="handleSubmit(event)">
       <input type="text" id="name" placeholder="Your Name" required />
-      <input type="text" id="website" placeholder="Website URL" required />
+      <input type="url" id="website" placeholder="https://yourwebsite.com" required />
       <input type="email" id="email" placeholder="Email Address" required />
 
       <button type="submit">Get My Report</button>
@@ -80,23 +80,48 @@
   </div>
 
   <script>
-    function handleSubmit(e) {
-      e.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
 
-      const data = {
-        name: document.getElementById("name").value,
-        website: document.getElementById("website").value,
-        email: document.getElementById("email").value
-      };
+    const name = document.getElementById("name").value.trim();
+    const website = document.getElementById("website").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-      console.log("Form Data:", data);
+    // Website validation
+    const websitePattern =
+      /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
 
-      alert("Form submitted successfully!");
-
-      // Clear form
-      e.target.reset();
+    if (!websitePattern.test(website)) {
+      alert("Please enter a valid website URL.");
+      return;
     }
-  </script>
 
+    // Strong email validation
+    const emailPattern =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    const data = {
+      name,
+      website,
+      email
+    };
+
+    console.log("Form Data:", data);
+
+    // Success message
+    alert("Form submitted successfully!");
+
+    // Reset form
+    e.target.reset();
+
+    // Redirect to homepage
+    window.location.href = "/";
+  }
+</script>
 </body>
 </html>
