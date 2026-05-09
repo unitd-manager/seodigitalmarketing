@@ -85,7 +85,7 @@
 
     const name = document.getElementById("name").value.trim();
     const website = document.getElementById("website").value.trim();
-    const email = document.getElementById("email").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
 
     // Website validation
     const websitePattern =
@@ -120,7 +120,7 @@
     e.target.reset();
 
     // Redirect to homepage
-    window.location.href = "/";
+    window.location.href = "https://seo.unitdtechnologies.com/";
   }
 </script>
 </body>
