@@ -61,14 +61,14 @@ const HeroSection = () => {
             </p>
 
             {/* BUTTONS */}
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center w-full">
 
   {/* FIRST BUTTON - Opens Form in New Tab */}
   <a
     href="/seo-form.html"
     target="_blank"
     rel="noopener noreferrer"
-    className="glow-button inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl text-base font-semibold whitespace-nowrap"
+    className="glow-button inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl text-base font-semibold whitespace-nowrap w-full sm:w-auto"
   >
     Get My Free SEO Growth Blueprint
     <ArrowUpRight className="w-4 h-4" />
@@ -79,7 +79,7 @@ const HeroSection = () => {
   href="https://calendar.app.google/FR6cLZASpaqTPHRV6"
   target="_blank"
   rel="noopener noreferrer"
-  className="inline-flex items-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl text-base font-medium hover:bg-secondary transition-colors whitespace-nowrap"
+  className="inline-flex items-center justify-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl text-base font-medium hover:bg-secondary transition-colors whitespace-nowrap w-full sm:w-auto"
 >
   Book a Session
 </a>

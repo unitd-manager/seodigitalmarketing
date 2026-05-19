@@ -72,7 +72,7 @@
 
     <form onsubmit="handleSubmit(event)">
       <input type="text" id="name" placeholder="Your Name" required />
-      <input type="url" id="website" placeholder="https://yourwebsite.com" required />
+      <input type="text" id="website" placeholder="www.example.com" required />
       <input type="email" id="email" placeholder="Email Address" required />
 
       <button type="submit">Get My Report</button>
@@ -98,7 +98,7 @@
 
     // Strong email validation
     const emailPattern =
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+      /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 
     if (!emailPattern.test(email)) {
       alert("Please enter a valid email address.");
