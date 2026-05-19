@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>SEO Audit Form</title>
 
   <style>
@@ -116,11 +119,20 @@
     // Success message
     alert("Form submitted successfully!");
 
-    // Reset form
-    e.target.reset();
+    /// Reset form
+e.target.reset();
 
-    // Redirect to homepage
-    window.location.href = "https://seo.unitdtechnologies.com/";
+// Clear values
+document.getElementById("website").value = "";
+document.getElementById("email").value = "";
+document.getElementById("name").value = "";
+
+// Clear cache/session
+localStorage.clear();
+sessionStorage.clear();
+
+// Redirect to homepage
+window.location.href = "https://seo.unitdtechnologies.com/";
   }
 </script>
 </body>
