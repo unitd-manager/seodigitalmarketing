@@ -79,7 +79,7 @@ const HeroSection = () => {
   href="https://calendar.app.google/FR6cLZASpaqTPHRV6"
   target="_blank"
   rel="noopener noreferrer"
-  className="inline-flex items-center justify-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl text-base font-medium hover:bg-secondary transition-colors whitespace-nowrap w-full sm:w-auto"
+  className="inline-flex  items-center justify-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl text-base font-medium hover:bg-secondary transition-colors whitespace-nowrap w-full sm:w-auto"
 >
   Book a Session
 </a>

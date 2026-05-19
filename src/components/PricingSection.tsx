@@ -259,13 +259,11 @@ const PricingSection = () => {
           className="flex flex-wrap justify-center gap-6 mt-14 text-sm text-muted-foreground"
         >
           {[
-            "✓ Cancel anytime",
             "✓ No setup fees",
             "✓ Secure payment via Stripe",
-            "✓ Results guaranteed",
-            "✓ 30-day money-back",
+            "✓ Results guaranteed"
           ].map((badge) => (
-            <span key={badge}>{badge}</span>
+            <span key={badge} className="flex items-center gap-6 px-4 py-2  roundedfull text-sm  borner border-border">{badge}</span>
           ))}
         </motion.div>
       </div>
