@@ -30,8 +30,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative w-full pt-8 pb-16 overflow-hidden hero-section">
-      
+    <section
+    id="about"
+    className="relative w-full pt-8 pb-16 overflow-hidden hero-section"
+  > 
       {/* Background Glow */}
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
 

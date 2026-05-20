@@ -37,7 +37,7 @@ const TimelineSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative" ref={ref}>
+    <section id="services" className="relative" ref={ref}>
       <div className="absolute inset-0 bg-secondary/30" />
 
       <div className="section-container relative">

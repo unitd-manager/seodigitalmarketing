@@ -40,20 +40,22 @@ const Header = () => {
           : ""
       }`}
     >
-      <div className="section-container flex items-center justify-between h-16 lg:h-20">
+      <div className="section-container flex items-center justify-between min-h-[72px] lg:h-20 py-2">
 
         {/* Logo */}
         <button
           onClick={() => navigate("/")}
           className="flex items-center gap-2"
         >
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center font-bold text-primary-foreground text-sm">
-            UTS
-          </div>
+          <img
+          src="/logo.png"
+          alt="UTS Logo"
+          className="w-10 h-10 object-contain"
+          />
 
-          <span className="font-bold text-lg text-foreground">
-            United Technologies Solutions
-          </span>
+        <span className="font-display font-bold text-sm sm:text-base lg:text-lg leading-tight text-yellow-400 max-w-[140px] sm:max-w-none">
+        United Technologies Solutions
+        </span>
         </button>
 
         {/* Nav */}
@@ -68,17 +70,17 @@ const Header = () => {
                   key={item}
                   href={`#${item.toLowerCase()}`}
                   className={`
-                    text-sm uppercase tracking-[2px]
-                    transition-all duration-200 cursor-pointer
-                    text-muted-foreground
-                    hover:text-orange-300
-                    hover:drop-shadow-[0_0_8px_#fb923c]
-                    ${
-                      isActive
-                        ? "text-orange-300 glow-button text-muted-foreground"
-                        : ""
-                    }
-                  `}
+              text-sm uppercase tracking-[2px]
+              transition-all duration-200 cursor-pointer
+              text-muted-foreground
+              hover:text-[#facc15]
+              hover:drop-shadow-[0_0_8px_#facc15]
+              ${
+                isActive
+                  ? "text-[#facc15] glow-button"
+                  : ""
+              }
+            `}
                 >
                   {item}
                 </a>
@@ -96,11 +98,11 @@ const Header = () => {
               relative w-10 h-10 rounded-lg flex items-center justify-center
               transition-all duration-200
               text-muted-foreground
-              hover:text-orange-300
+              hover:text-[#facc15]
+              hover:drop-shadow-[0_0_8px_#facc15]
               hover:bg-muted/50
-              hover:drop-shadow-[0_0_8px_#fb923c]
               ${location.pathname === "/cart"
-                ? "text-orange-300"
+                ? "text-[#facc15]"
                 : ""
               }
             `}
@@ -109,7 +111,7 @@ const Header = () => {
             <ShoppingCart className="w-5 h-5" />
 
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-orange-300 text-black text-xs font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#facc15] text-black text-xs font-bold rounded-full flex items-center justify-center">
                 {cartCount}
               </span>
             )}
