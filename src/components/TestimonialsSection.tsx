@@ -1,28 +1,30 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Star } from "lucide-react";
+import { Star, User, UserRound } from "lucide-react";
 
 const testimonials = [
   {
     name: "Michael Torres",
+    gender: "male",
     location: "Austin, TX",
     role: "CEO, Torres Financial Group",
     quote: "Within 6 months, our organic traffic tripled and we're ranking #1 for our highest revenue keywords.",
   },
   {
     name: "Sarah Mitchell",
+    gender: "female",
     location: "Denver, CO",
     role: "Founder, Mitchell & Co.",
     quote: "From page 5 to page 1. Our phone hasn't stopped ringing.",
   },
   {
     name: "David Chen",
+    gender: "male",
     location: "San Diego, CA",
     role: "VP Marketing, Chen Medical",
     quote: "400% increase in qualified leads. The ROI speaks for itself.",
   },
 ];
-
 const stats = [
   { value: "+187%", label: "Organic Traffic Growth" },
   { value: "3X", label: "Lead Increase" },
@@ -36,7 +38,7 @@ const TestimonialsSection = () => {
 
   return (
     <section
-      id="results"
+      id="testimonials"
       className="relative bg-gradient-to-br from-background via-secondary to-background"
       ref={ref}
     >
@@ -52,7 +54,7 @@ const TestimonialsSection = () => {
           className="text-center mb-12"
         >
           <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 text-foreground">
-            Proven Results
+            Client Testimonials
           </h2>
           <h2 className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">
             Real Clients. Real Revenue.
@@ -95,11 +97,27 @@ const TestimonialsSection = () => {
               <p className="text-secondary-foreground leading-relaxed mb-6 flex-1">
                 "{t.quote}"
               </p>
-              <div>
-                <div className="font-display font-bold text-foreground">{t.name}</div>
-                <div className="text-sm text-muted-foreground">{t.role}</div>
-                <div className="text-xs text-primary mt-1">{t.location}</div>
+              <div className="flex items-start gap-3 mt-4">
+                      {t.gender === "female" ? (
+                <UserRound className="w-14 h-14 text-pink-400" />
+              ) : (
+                <User className="w-14 h-14 text-primary" />
+              )}
+
+            <div>
+              <div className="font-display font-bold text-foreground">
+                {t.name}
               </div>
+
+              <div className="text-sm text-muted-foreground">
+                {t.role}
+              </div>
+
+              <div className="text-xs text-primary mt-1">
+                {t.location}
+              </div>
+            </div>
+          </div>
             </motion.div>
           ))}
         </div>

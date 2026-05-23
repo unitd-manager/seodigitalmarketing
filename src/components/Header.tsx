@@ -6,6 +6,7 @@ import { useCart } from "@/context/CartContext";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   const { cartCount } = useCart();
 
@@ -21,13 +22,41 @@ const Header = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+  const handleScroll = () => {
+    const sections = navItems.map((item) =>
+  document.getElementById(
+    item.toLowerCase().replace(/\s+/g, "-")
+  )
+);
+    sections.forEach((section) => {
+      if (section) {
+        const top = section.offsetTop - 120;
+        const height = section.offsetHeight;
+
+        if (
+          window.scrollY >= top &&
+          window.scrollY < top + height
+        ) {
+          setActiveSection(section.id);
+        }
+      }
+    });
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
   const navItems = [
-    "Services",
-    "Results",
-    "Process",
-    "About",
-    "Pricing",
-  ];
+
+  "Services",
+  "Process",
+  "About",
+  "Testimonials",
+  "Case Studies",
+  "Pricing",
+];
 
   return (
     <motion.header
@@ -40,12 +69,12 @@ const Header = () => {
           : ""
       }`}
     >
-      <div className="section-container flex items-center justify-between min-h-[72px] lg:h-20 py-2">
+      <div className="section-container flex items-start md:items-center justify-between min-h-[90px] lg:h-20 py-3">
 
         {/* Logo */}
         <button
           onClick={() => navigate("/")}
-          className="flex items-center gap-2"
+          className="flex items-start gap-2 max-w-[220px]"
         >
           <img
           src="/logo.png"
@@ -53,8 +82,8 @@ const Header = () => {
           className="w-10 h-10 object-contain"
           />
 
-        <span className="font-display font-bold text-sm sm:text-base lg:text-lg leading-tight text-yellow-400 max-w-[140px] sm:max-w-none">
-        United Technologies Solutions
+        <span className="font-display font-bold text-base md:text-lg text-white leading-snug">
+         United Technologies Solutions
         </span>
         </button>
 
@@ -62,25 +91,22 @@ const Header = () => {
         <nav className="hidden md:flex items-center gap-8">
           {isHome &&
             navItems.map((item) => {
-              const isActive =
-                location.hash === `#${item.toLowerCase()}`;
+              const sectionId = item.toLowerCase().replace(/\s+/g, "-");
 
+            const isActive = activeSection === sectionId;
               return (
                 <a
                   key={item}
-                  href={`#${item.toLowerCase()}`}
+                  href={`#${sectionId}`}
                   className={`
-              text-sm uppercase tracking-[2px]
-              transition-all duration-200 cursor-pointer
-              text-muted-foreground
-              hover:text-[#facc15]
-              hover:drop-shadow-[0_0_8px_#facc15]
-              ${
-                isActive
-                  ? "text-[#facc15] glow-button"
-                  : ""
-              }
-            `}
+          text-sm uppercase tracking-[2px]
+          transition-all duration-200 cursor-pointer
+          ${
+  isActive
+    ? "text-yellow-400 drop-shadow-[0_0_14px_#facc15] font-semibold"
+    : "text-muted-foreground hover:text-yellow-400 hover:drop-shadow-[0_0_12px_#facc15]"
+}
+        `}
                 >
                   {item}
                 </a>
@@ -122,7 +148,7 @@ const Header = () => {
             href="https://calendar.app.google/FR6cLZASpaqTPHRV6"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold hover:drop-shadow-[0_0_10px_#fb923c]"
+            className="bg-primary text-primary-foreground px-4 md:px-5 py-2 md:py-2.5 rounded-2xl text-sm font-semibold whitespace-nowrap"
           >
             Book a Call
           </a>

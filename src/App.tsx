@@ -9,7 +9,11 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import NotFound from "./pages/NotFound";
+import TransportationCaseStudy from "./pages/case-studies/TransportationCaseStudy";
+import HealthcareCaseStudy from "./pages/case-studies/HealthcareCaseStudy";
+import ManufacturingCaseStudy from "./pages/case-studies/ManufacturingCaseStudy";
 import { CartProvider } from "./context/CartContext";
+
 
 const queryClient = new QueryClient();
 
@@ -23,8 +27,21 @@ const AppRoutes = () => {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/checkout/success" element={<CheckoutSuccess />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-      <Route path="*" element={<NotFound />} />
+          <Route
+      path="/case-studies/transportation-seo-growth"
+      element={<TransportationCaseStudy />}
+    />
+    <Route
+      path="/case-studies/healthcare-seo-growth"
+      element={<HealthcareCaseStudy />}
+    />
+    <Route
+      path="/case-studies/manufacturing-seo-growth"
+      element={<ManufacturingCaseStudy />}
+    />
+    <Route path="*" element={<NotFound />} />
     </Routes>
+    
   );
 };
 

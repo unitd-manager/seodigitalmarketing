@@ -14,6 +14,7 @@ import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
 import HiddenCostSection from "@/components/HiddenCostSection";
 import PricingSection from "@/components/PricingSection";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 
 const Index = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ const Index = () => {
         <TimelineSection />
         <FrameworkSection />
         <TestimonialsSection />
+        <CaseStudiesSection />
         <VisionSection />
         <HowItWorksSection />
         <PricingSection />
