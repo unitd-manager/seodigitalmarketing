@@ -103,8 +103,8 @@ const Header = () => {
           transition-all duration-200 cursor-pointer
           ${
   isActive
-    ? "text-yellow-400 drop-shadow-[0_0_14px_#facc15] font-semibold"
-    : "text-muted-foreground hover:text-yellow-400 hover:drop-shadow-[0_0_12px_#facc15]"
+    ? "text-[#fbb323] drop-shadow-[0_0_18px_#fbb323] font-semibold"
+    : "text-muted-foreground hover:text-[#fbb323] hover:drop-shadow-[0_0_12px_#fbb323]"
 }
         `}
                 >
@@ -124,11 +124,11 @@ const Header = () => {
               relative w-10 h-10 rounded-lg flex items-center justify-center
               transition-all duration-200
               text-muted-foreground
-              hover:text-[#facc15]
-              hover:drop-shadow-[0_0_8px_#facc15]
+              hover:text-[#fbb323]
+              hover:drop-shadow-[0_0_8px_#fbb323]
               hover:bg-muted/50
               ${location.pathname === "/cart"
-                ? "text-[#facc15]"
+                ? "text-[#fbb323] drop-shadow-[0_0_12px_#fbb323]"
                 : ""
               }
             `}
