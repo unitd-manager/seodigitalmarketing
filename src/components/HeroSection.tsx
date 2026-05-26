@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
+
 
 const stats = [
   { value: "100+", label: "US Businesses Served" },
@@ -13,22 +15,29 @@ const HeroSection = () => {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const formData = new FormData(e.target);
+  emailjs
+    .sendForm(
+      "service_0cccj2c", // Service ID
+      "template_ozkgj4d", // Template ID
+      e.target,
+      "CYGz-4ZrPq7oVsO_4" // Public Key
+    )
+    .then(
+      () => {
+      alert("SEO Audit Request Sent Successfully!");
+      e.target.reset();
+      setOpen(false);
+      },
+      (error) => {
+        console.log(error.text);
+        alert("Failed to send request.");
+      }
+    );
+};
 
-    const data = {
-      name: formData.get("name"),
-      website: formData.get("website"),
-      email: formData.get("email"),
-    };
-
-    console.log("Form Data:", data);
-
-    alert("Form submitted successfully!");
-    setOpen(false);
-  };
-
+    
   return (
     <section
     id="about"
@@ -67,15 +76,13 @@ const HeroSection = () => {
 
   {/* FIRST BUTTON - Opens Form in New Tab */}
   <a
-    href="/seo-form.html"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="glow-button inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl text-base font-semibold whitespace-nowrap w-full sm:w-auto"
-  >
-    Get My Free SEO Growth Blueprint
-    <ArrowUpRight className="w-4 h-4" />
-  </a>
-
+  href="/seo-form.html"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block bg-primary text-black px-8 py-4 rounded-2xl font-semibold hover:scale-105 transition-all duration-300"
+>
+  Get My Free SEO Growth Blueprint
+</a>
   {/* SECOND BUTTON - Next to First */}
   <a
   href="https://calendar.app.google/FR6cLZASpaqTPHRV6"

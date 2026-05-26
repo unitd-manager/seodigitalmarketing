@@ -4,25 +4,28 @@ import { Star, User, UserRound } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Michael Torres",
+    name: "Mahesh Vinayagam",
     gender: "male",
-    location: "Austin, TX",
-    role: "CEO, Torres Financial Group",
-    quote: "Within 6 months, our organic traffic tripled and we're ranking #1 for our highest revenue keywords.",
+    location: "qBotica",
+    role: "CEO and Founder",
+    quote:
+      "The SEO strategy significantly improved our search visibility, lead quality, and organic traffic growth. The team consistently delivered measurable results with a strong focus on business impact.",
   },
   {
-    name: "Sarah Mitchell",
+    name: "Shakeela",
     gender: "female",
-    location: "Denver, CO",
-    role: "Founder, Mitchell & Co.",
-    quote: "From page 5 to page 1. Our phone hasn't stopped ringing.",
+    location: "Dr Pals New Me",
+    role: "Founder",
+    quote:
+      "Our website traffic and consultation inquiries increased steadily after the SEO optimization. The team understood our healthcare niche well and helped strengthen our online presence.",
   },
   {
-    name: "David Chen",
+    name: "Murugan",
     gender: "male",
-    location: "San Diego, CA",
-    role: "VP Marketing, Chen Medical",
-    quote: "400% increase in qualified leads. The ROI speaks for itself.",
+    location: "JusPredict",
+    role: "Founder",
+    quote:
+      "The SEO improvements enhanced our keyword rankings and generated more inbound business inquiries. Their structured approach and continuous optimization delivered excellent long-term results.",
   },
 ];
 const stats = [
