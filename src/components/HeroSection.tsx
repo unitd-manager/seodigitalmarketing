@@ -17,24 +17,7 @@ const HeroSection = () => {
   const handleSubmit = (e) => {
   e.preventDefault();
 
-  emailjs
-    .sendForm(
-      "service_0cccj2c", // Service ID
-      "template_ozkgj4d", // Template ID
-      e.target,
-      "CYGz-4ZrPq7oVsO_4" // Public Key
-    )
-    .then(
-      () => {
-      alert("SEO Audit Request Sent Successfully!");
-      e.target.reset();
-      setOpen(false);
-      },
-      (error) => {
-        console.log(error.text);
-        alert("Failed to send request.");
-      }
-    );
+  
 };
 
     
