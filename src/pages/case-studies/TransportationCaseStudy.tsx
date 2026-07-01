@@ -1,7 +1,8 @@
+'use client';
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
@@ -15,26 +16,16 @@ const fadeUp = {
 };
 
 const SectionLabel = ({ children }: { children: ReactNode }) => (
-  <div className="flex items-center gap-3 mb-8">
-    <span className="h-px flex-1 max-w-[40px] bg-primary/40" />
-    <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">
+  <div className="flex items-center gap-4 mb-10">
+    <h2 className="text-lg font-bold tracking-widest text-amber-500 uppercase whitespace-nowrap">
       {children}
-    </span>
-    <span className="h-px flex-1 bg-white/10" />
-  </div>
-);
-
-const PremiumCard = ({ num, title, children }: { num: string; title: string; children: ReactNode }) => (
-  <div className="relative h-full p-9 rounded-3xl border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-[0_25px_60px_rgba(255,119,5,0.1)] transition-all duration-500 group overflow-hidden">
-    <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-primary border border-primary/20 bg-primary/[0.08] mb-6">{num}</div>
-    <h3 className="text-xl font-semibold mb-5">{title}</h3>
-    {children}
+    </h2>
+    <div className="flex-1 h-px bg-gradient-to-r from-amber-500/40 to-transparent" />
   </div>
 );
 
 const Tag = ({ children }: { children: ReactNode }) => (
-  <span className="px-4 py-2.5 rounded-full bg-white/[0.04] border border-white/[0.09] text-base text-white/70 hover:border-primary/40 hover:bg-primary/20 hover:text-white transition-all duration-300 cursor-default ">
+  <span className="px-4 py-2.5 rounded-full bg-white/[0.04] border border-white/[0.09] text-base text-white/70 hover:border-primary/40 hover:bg-primary/20 hover:text-white transition-all duration-300 cursor-default">
     {children}
   </span>
 );
@@ -86,7 +77,6 @@ const seoPhases = [
   },
 ];
 
-// ── Typed challenge data (keeps JSX out of inline array literals) ──
 interface ChallengeItem { num: string; title: string; body: ReactNode }
 const challenges: ChallengeItem[] = [
   {
@@ -132,15 +122,15 @@ const challenges: ChallengeItem[] = [
   },
 ];
 
-// ── Typed results data ──
-interface ResultItem { metric: string; title: string; content: ReactNode }
+interface ResultItem { metric: string; title: string; description: string; content: ReactNode }
 const results: ResultItem[] = [
   {
-    metric: "187%", title: "Growth in Organic Traffic",
+    metric: "187%",
+    title: "Growth in Organic Traffic",
+    description: "One of the most significant achievements was the substantial increase in organic website traffic, expanding the company's digital reach to potential customers actively searching for automation and technology solutions.",
     content: (
       <>
-        <p className="text-muted-foreground text-lg leading-9 mb-5">One of the most significant achievements was the increase in organic website traffic.</p>
-        <p className="text-muted-foreground text-lg leading-9 mb-6">By improving rankings across targeted keywords and expanding search visibility, qBotica experienced a substantial rise in visitors arriving through search engines.</p>
+        <p className="text-muted-foreground text-lg leading-9 mb-5">By improving rankings across targeted keywords and expanding search visibility, qBotica experienced a substantial rise in visitors arriving through search engines.</p>
         <div className="rounded-2xl border border-primary/20 bg-primary/[0.08] p-5 mb-6">
           <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-2">Result</p>
           <h4 className="text-xl font-bold text-white">187% Increase in Organic Traffic</h4>
@@ -150,10 +140,11 @@ const results: ResultItem[] = [
     ),
   },
   {
-    metric: "3X", title: "Increase in Qualified Leads",
+    metric: "3X",
+    title: "Increase in Qualified Leads",
+    description: "As search visibility improved and content became more aligned with user intent, qBotica saw a significant increase in inbound inquiries from relevant prospects, creating a more predictable lead-generation pipeline.",
     content: (
       <>
-        <p className="text-muted-foreground text-lg leading-9 mb-5">Traffic alone is not enough.</p>
         <p className="text-muted-foreground text-lg leading-9 mb-5">The ultimate goal was generating qualified business opportunities.</p>
         <p className="text-muted-foreground text-lg leading-9 mb-6">As search visibility improved and content became more aligned with user intent, qBotica saw a significant increase in inbound inquiries from relevant prospects.</p>
         <div className="rounded-2xl border border-primary/20 bg-primary/[0.08] p-5 mb-6">
@@ -165,7 +156,9 @@ const results: ResultItem[] = [
     ),
   },
   {
-    metric: "Top", title: "Improved Search Rankings",
+    metric: "Top",
+    title: "Improved Search Rankings",
+    description: "Several targeted search terms achieved first-page visibility, while multiple strategic keywords moved into highly competitive ranking positions, strengthening qBotica's market presence.",
     content: (
       <>
         <p className="text-muted-foreground text-lg leading-9 mb-5">The campaign successfully increased visibility for core industry keywords.</p>
@@ -179,7 +172,9 @@ const results: ResultItem[] = [
     ),
   },
   {
-    metric: "92%", title: "Increase in SEO ROI",
+    metric: "92%",
+    title: "Increase in SEO ROI",
+    description: "By focusing on sustainable organic growth rather than short-term paid traffic, the campaign delivered strong returns on investment with ongoing visibility and long-term lead generation.",
     content: (
       <>
         <p className="text-muted-foreground text-lg leading-9 mb-6">By focusing on sustainable organic growth rather than short-term paid traffic, the campaign delivered strong returns on investment.</p>
@@ -193,6 +188,13 @@ const results: ResultItem[] = [
   },
 ];
 
+const overviewPoints = [
+  "qBotica is a technology-driven company focused on delivering intelligent automation, AI-powered solutions, and digital transformation services for businesses seeking greater operational efficiency and innovation.",
+  "While qBotica had established a strong reputation within its industry, the company faced a common challenge experienced by many technology service providers. Despite offering high-value solutions, its online visibility did not accurately reflect its expertise, capabilities, or market position.",
+  "To strengthen its digital presence and attract more qualified prospects, qBotica partnered with United Technologies Solutions to implement a long-term SEO strategy focused on sustainable growth, search visibility, and lead generation.",
+  "The objective was simple: make it easier for potential customers actively searching for automation and technology solutions to discover qBotica through organic search.",
+];
+
 const TransportationCaseStudy = () => {
   const [activePhase, setActivePhase] = useState(0);
   const [openChallenge, setOpenChallenge] = useState<number | null>(null);
@@ -203,7 +205,8 @@ const TransportationCaseStudy = () => {
       <Header />
 
       {/* ── Hero Header ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-[#080c14] pt-20 pb-32 md:pb-26">
+      
+      <section className="relative overflow-hidden bg-[#080c14] pt-8 pb-20">
         <div className="pointer-events-none absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,119,5,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,119,5,0.6) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-primary/10 blur-[100px]" />
 
@@ -214,12 +217,12 @@ const TransportationCaseStudy = () => {
               <span className="inline-block text-base font-semibold tracking-[0.2em] uppercase mb-6" style={{ background: "linear-gradient(90deg, #ff7705 0%, #ffb347 40%, #ff7705 60%, #ff4500 100%)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", animation: "organicShimmer 2.8s linear infinite" }}>
                 Organic Growth
               </span>
-              <h1 className="font-display text-4xl md:text-6xl lg:text-[72px] font-bold leading-[1.05] mb-8 text-white text-left">
+              <h1 className="font-display text-3xl md:text-4xl lg:text-6xl font-bold leading-[1.1] mb-8 text-white text-left">
                 How United Technologies Solutions Helped{" "}
                 <span className="gradient-text">qBotica Accelerate Organic Growth</span>{" "}
                 Through Strategic SEO
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-xl text-left">
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl text-left">
                 A comprehensive SEO campaign that improved search visibility, increased qualified website traffic, and generated stronger inbound opportunities for qBotica in a highly competitive technology and automation market.
               </p>
             </motion.div>
@@ -245,56 +248,60 @@ const TransportationCaseStudy = () => {
 
       {/* ── Body ─────────────────────────────────────────────── */}
       <div className="bg-[#0a0f1a]">
-        <div className="section-container py-24 space-y-28">
+        <div className="section-container py-20 space-y-24">
 
           {/* ── Overview ─────────────────────────────────────── */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
             <SectionLabel>Overview</SectionLabel>
-            <div className="rounded-3xl border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-xl p-10 md:p-14 space-y-5">
-              {[
-                "qBotica is a technology-driven company focused on delivering intelligent automation, AI-powered solutions, and digital transformation services for businesses seeking greater operational efficiency and innovation.",
-                "While qBotica had established a strong reputation within its industry, the company faced a common challenge experienced by many technology service providers. Despite offering high-value solutions, its online visibility did not accurately reflect its expertise, capabilities, or market position.",
-                "To strengthen its digital presence and attract more qualified prospects, qBotica partnered with United Technologies Solutions to implement a long-term SEO strategy focused on sustainable growth, search visibility, and lead generation.",
-                "The objective was simple: make it easier for potential customers actively searching for automation and technology solutions to discover qBotica through organic search.",
-              ].map((text, index) => (
-                <motion.div key={index} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-40px" }} variants={fadeUp}
-                  className="group relative overflow-hidden flex items-start gap-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 transition-all duration-500 hover:border-primary/30 hover:bg-primary/[0.05] hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(255,119,5,0.12)] cursor-default">
-                  <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute inset-y-0 left-0 w-[3px] rounded-full bg-gradient-to-b from-primary/0 via-primary/60 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-primary/40 bg-primary/10 transition-all duration-500 group-hover:bg-primary group-hover:border-primary group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,119,5,0.4)]">
-                    <Check className="h-5 w-5 text-primary transition-colors duration-300 group-hover:text-black" strokeWidth={2.5} />
+            <ul className="space-y-5">
+              {overviewPoints.map((text, index) => (
+                <motion.li key={index} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-40px" }} variants={fadeUp} className="flex items-start gap-4">
+                  <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-white text-sm font-bold">✓</span>
                   </div>
-                  <span className="absolute top-4 right-5 text-xs font-mono text-white/10 group-hover:text-primary/30 transition-colors duration-500 select-none">0{index + 1}</span>
-                  <p className="text-lg md:text-xl text-muted-foreground leading-9 group-hover:text-white/80 transition-colors duration-500">{text}</p>
-                </motion.div>
+                  <p className="text-lg md:text-xl text-muted-foreground leading-9">{text}</p>
+                </motion.li>
               ))}
-            </div>
+            </ul>
           </motion.div>
 
-          {/* ── The Challenge ────────────────────────────────── */}
+          {/* ── Challenge ────────────────────────────────── */}
           <div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
-              <SectionLabel>The Challenge</SectionLabel>
-              <p className="text-muted-foreground text-xl md:text-2xl leading-9 mb-12 max-w-2xl">
-                Before the SEO campaign began, qBotica encountered several barriers that limited organic growth and reduced opportunities to generate inbound business.
-              </p>
+              <SectionLabel>Challenge</SectionLabel>
+              <div className="mb-10">
+                <p className="text-muted-foreground text-lg md:text-xl leading-9">
+                  Before the SEO campaign began, qBotica encountered several barriers that limited organic growth and reduced opportunities to generate inbound business.
+                </p>
+              </div>
             </motion.div>
 
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4">
               {challenges.map((c, i) => (
                 <motion.div key={c.num} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} variants={fadeUp}>
-                  <div className="relative h-full rounded-3xl p-8 border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl hover:border-primary/30 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(255,119,5,0.1)] transition-all duration-500 group">
-                    <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary font-bold flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">{c.num}</div>
-                    <h3 className="text-xl font-semibold mb-5">{c.title}</h3>
-                    <button onClick={() => setOpenChallenge(openChallenge === i ? null : i)}
-                      className="text-primary font-medium flex items-center gap-2 hover:text-orange-300 transition-colors duration-300">
-                      {openChallenge === i ? "Read Less" : "Read More"}
-                      <span className={`transition-transform duration-300 ${openChallenge === i ? "rotate-180" : ""}`}>↓</span>
-                    </button>
-                    <div className={`overflow-hidden transition-all duration-500 ${openChallenge === i ? "max-h-[500px] mt-6 opacity-100" : "max-h-0 opacity-0"}`}>
-                      <div className="text-muted-foreground">{c.body}</div>
+                  <div className="gradient-card rounded-3xl p-8 border border-primary/10 hover:border-primary/40 hover:-translate-y-2 hover:shadow-[0_0_35px_rgba(255,119,5,0.25)] transition-all duration-500 h-full">
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-4xl font-bold text-primary">{c.num}</span>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">{c.title}</h3>
                     </div>
+                    <div className="text-muted-foreground pl-16">
+                      {openChallenge === i ? (
+                        <div>{c.body}</div>
+                      ) : (
+                        <p className="text-base leading-8 line-clamp-2 text-muted-foreground/70">
+                          {i === 0 && "The website struggled to rank for highly competitive industry keywords..."}
+                          {i === 1 && "While other marketing channels provided occasional traffic..."}
+                          {i === 2 && "A detailed website audit revealed several technical issues..."}
+                          {i === 3 && "Many service pages lacked comprehensive keyword targeting..."}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setOpenChallenge(openChallenge === i ? null : i)}
+                      className="mt-4 ml-16 text-primary font-semibold flex items-center gap-2 hover:gap-3 transition-all bg-transparent border-none outline-none"
+                    >
+                      {openChallenge === i ? "Read Less ↑" : "Read More ↓"}
+                    </button>
                   </div>
                 </motion.div>
               ))}
@@ -304,32 +311,49 @@ const TransportationCaseStudy = () => {
           {/* ── SEO Strategy ─────────────────────────────────── */}
           <div>
             <SectionLabel>SEO Strategy Implemented</SectionLabel>
-            <p className="text-muted-foreground text-xl md:text-2xl leading-9 mb-4 max-w-2xl">
-              United Technologies Solutions developed a multi-layered SEO strategy designed to improve technical performance, strengthen content relevance, and increase search authority over time.
-            </p>
-            <p className="text-muted-foreground text-xl md:text-2xl leading-9 mb-14 max-w-2xl">
-              Rather than focusing on short-term gains, the campaign emphasized sustainable organic growth.
-            </p>
+            <div className="mb-4">
+              <p className="text-muted-foreground text-lg md:text-xl leading-9">
+                United Technologies Solutions developed a multi-layered SEO strategy designed to improve technical performance, strengthen content relevance, and increase search authority over time.
+              </p>
+            </div>
+            <div className="mb-12">
+              <p className="text-muted-foreground text-lg md:text-xl leading-9">
+                Rather than focusing on short-term gains, the campaign emphasized sustainable organic growth.
+              </p>
+            </div>
 
             <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-10">
-              <motion.div key={activePhase} initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-                className="rounded-3xl border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl p-10">
+              {/* Left active phase box */}
+<motion.div key={activePhase}
+  initial={{ opacity: 0, y: 20, boxShadow: "0 0 40px rgba(255,119,5,0.3)", borderColor: "rgba(255,119,5,0.6)" }}
+  animate={{ opacity: 1, y: 0, boxShadow: "0 0 0px rgba(255,119,5,0)", borderColor: "rgba(255,255,255,0.07)" }}
+  transition={{ duration: 0.6 }}
+  className="rounded-3xl border bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl p-10 hover:border-primary/40 hover:shadow-[0_0_35px_rgba(255,119,5,0.2)] hover:-translate-y-1 transition-all duration-500">
+
                 <p className="text-primary text-xs uppercase tracking-[0.25em] font-semibold mb-3">{seoPhases[activePhase].phase}</p>
-                <h3 className="text-3xl font-bold mb-8">{seoPhases[activePhase].title}</h3>
+                <h3 className="text-2xl md:text-3xl font-bold mb-6">{seoPhases[activePhase].title}</h3>
                 {seoPhases[activePhase].intro.map((t, i) => (
-                  <p key={i} className="text-muted-foreground text-lg md:text-xl leading-9 mb-4">{t}</p>
+                  <p key={i} className="text-muted-foreground text-base md:text-lg leading-8 mb-4">{t}</p>
                 ))}
-                <h4 className="text-sm uppercase tracking-[0.2em] text-white/70 mt-8 mb-5">{seoPhases[activePhase].label}</h4>
-                <div className="flex flex-wrap gap-2 mb-8">{seoPhases[activePhase].tags.map((t) => <Tag key={t}>{t}</Tag>)}</div>
-                <p className="text-muted-foreground text-lg md:text-xl leading-9">{seoPhases[activePhase].outro}</p>
+                <h4 className="text-sm uppercase tracking-[0.2em] text-white/70 mt-6 mb-4">{seoPhases[activePhase].label}</h4>
+                <div className="flex flex-wrap gap-2 mb-6">{seoPhases[activePhase].tags.map((t) => <Tag key={t}>{t}</Tag>)}</div>
+                <p className="text-muted-foreground text-base md:text-lg leading-8">{seoPhases[activePhase].outro}</p>
               </motion.div>
 
-              <div className="flex flex-col gap-5">
+              {/* Right phase selector — hover effect added */}
+              <div className="flex flex-col gap-4">
                 {seoPhases.map((phase, index) => (
-                  <div key={phase.phase} onMouseEnter={() => setActivePhase(index)}
-                    className={`cursor-pointer rounded-2xl p-7 border transition-all duration-500 ${activePhase === index ? "border-primary bg-primary/10 shadow-[0_20px_50px_rgba(255,119,5,0.15)]" : "border-white/[0.07] bg-white/[0.03] hover:border-primary/30 hover:bg-primary/[0.05]"}`}>
+                  <div
+                    key={phase.phase}
+                    onMouseEnter={() => setActivePhase(index)}
+                    className={`cursor-pointer rounded-2xl p-6 border transition-all duration-500 group ${
+                      activePhase === index
+                        ? "border-primary bg-primary/10 shadow-[0_0_30px_rgba(255,119,5,0.25),0_20px_50px_rgba(255,119,5,0.15)] scale-[1.02]"
+                        : "border-white/[0.07] bg-white/[0.03] hover:border-primary/40 hover:bg-primary/[0.06] hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,119,5,0.2)] hover:-translate-y-1"
+                    }`}
+                  >
                     <p className="text-primary text-xs uppercase tracking-[0.25em] font-semibold mb-2">{phase.phase}</p>
-                    <h3 className="text-xl font-bold">{phase.title}</h3>
+                    <h3 className="text-lg font-bold group-hover:text-white transition-colors duration-300">{phase.title}</h3>
                   </div>
                 ))}
               </div>
@@ -340,25 +364,29 @@ const TransportationCaseStudy = () => {
           <div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
               <SectionLabel>Results</SectionLabel>
-              <p className="text-muted-foreground text-xl md:text-2xl leading-9 mb-14 max-w-3xl">
-                The combined impact of technical optimization, content development, authority building, and user experience improvements produced measurable growth for qBotica.
-              </p>
+              <div className="mb-10">
+                <p className="text-muted-foreground text-lg md:text-xl leading-9">
+                  The combined impact of technical optimization, content development, authority building, and user experience improvements produced measurable growth for qBotica.
+                </p>
+              </div>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
               {results.map((result, index) => (
                 <motion.div key={result.title} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
                   className="relative overflow-hidden rounded-3xl border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl p-8 md:p-10 hover:border-primary/30 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,119,5,0.12)] transition-all duration-500 group">
                   <div className="absolute inset-x-0 top-0 h-[1px] rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="text-5xl md:text-6xl font-bold text-primary mb-4">{result.metric}</div>
-                  <h3 className="text-2xl font-bold text-white mb-6">{result.title}</h3>
+                  <div className="text-4xl md:text-5xl font-bold text-primary mb-3">{result.metric}</div>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{result.title}</h3>
+                  <p className="text-muted-foreground text-base leading-8 mb-5">{result.description}</p>
                   <div className={`overflow-hidden transition-all duration-500 ${openResult === index ? "max-h-[1200px] opacity-100 mb-6" : "max-h-0 opacity-0"}`}>
                     {result.content}
                   </div>
-                  <button onClick={() => setOpenResult(openResult === index ? null : index)}
-                    className="inline-flex items-center gap-2 text-primary font-medium hover:text-orange-300 transition-colors duration-300">
-                    {openResult === index ? "View Less" : "View More"}
-                    <span className={`transition-transform duration-300 ${openResult === index ? "rotate-180" : ""}`}>↓</span>
+                  <button
+                    onClick={() => setOpenResult(openResult === index ? null : index)}
+                    className="inline-flex items-center gap-2 text-primary font-semibold hover:text-orange-300 transition-colors duration-300 bg-transparent border-none outline-none"
+                  >
+                    {openResult === index ? "View Less ↑" : "View More ↓"}
                   </button>
                 </motion.div>
               ))}
@@ -369,27 +397,35 @@ const TransportationCaseStudy = () => {
           <div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
               <SectionLabel>Why the Strategy Worked</SectionLabel>
-              <p className="text-muted-foreground text-xl md:text-2xl leading-9 mb-3 max-w-2xl">
-                The success of the campaign was not the result of a single tactic.
-              </p>
-              <p className="text-muted-foreground text-xl md:text-2xl leading-9 mb-12 max-w-2xl">
-                Instead, it came from combining multiple SEO disciplines into a unified strategy.
-              </p>
-              <h3 className="text-xl font-semibold mb-8">Key Success Factors</h3>
+              <div className="mb-3">
+                <p className="text-muted-foreground text-lg md:text-xl leading-9 ">
+                  The success of the campaign was not the result of a single tactic.
+                </p>
+              </div>
+              <div className="mb-10">
+                <p className="text-muted-foreground text-lg md:text-xl leading-9">
+                  Instead, it came from combining multiple SEO disciplines into a unified strategy.
+                </p>
+              </div>
             </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {["Strong technical SEO foundation","Search intent-focused content","Strategic keyword targeting","Authority-building initiatives","User experience improvements","Continuous performance monitoring"].map((f, i) => (
                 <motion.div key={f} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-40px" }} variants={fadeUp}
-                  className="flex items-start gap-4 p-7 rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-primary/30 hover:bg-primary/[0.04] hover:-translate-y-0.5 transition-all duration-400">
-                  <span className="mt-0.5 w-5 h-5 rounded-full border border-primary/40 bg-primary/10 flex items-center justify-center shrink-0">
-                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                      <path d="M1 4L3.5 6.5L9 1" stroke="rgb(255,119,5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
-                  <span className="text-base md:text-lg font-medium text-white/80 leading-7">{f}</span>
+                  className="glass-card flex items-start gap-4 p-6 rounded-2xl border border-primary/10 hover:border-primary/40 hover:bg-primary/[0.04] hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,119,5,0.2)] transition-all duration-500">
+                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white font-bold text-xs">✓</span>
+                  </div>
+                  <span className="text-base font-medium text-white/80 leading-7">{f}</span>
                 </motion.div>
               ))}
+            </div>
+
+            <div className="mb-10">
+              <motion.p initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+                className="text-muted-foreground text-lg md:text-xl leading-9 mt-10 ">
+                This integrated approach allowed qBotica to achieve measurable and sustainable growth.
+              </motion.p>
             </div>
 
             <motion.p initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
@@ -401,14 +437,12 @@ const TransportationCaseStudy = () => {
           {/* ── Looking Ahead ───────────────────────────────────── */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
             <SectionLabel>Looking Ahead</SectionLabel>
-            <div className="relative rounded-3xl border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl p-10 md:p-12 hover:border-primary/30 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,119,5,0.1)] transition-all duration-500 group">
+            <div className="glass-card relative rounded-3xl border border-primary/10 p-8 md:p-10 hover:border-primary/30 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,119,5,0.1)] transition-all duration-500 group">
               <div className="absolute inset-x-0 top-0 h-[1px] rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold text-primary border border-primary/20 bg-primary/[0.08] mb-7">→</div>
-              <h2 className="text-3xl font-bold text-primary mb-8">Looking Ahead</h2>
-              <div className="space-y-5">
-                <p className="text-muted-foreground text-lg md:text-xl leading-9">Organic search continues to be one of the most valuable channels for long-term business growth.</p>
-                <p className="text-muted-foreground text-lg md:text-xl leading-9">As competition within the technology and automation sector increases, maintaining strong search visibility remains essential for attracting new customers and expanding market reach.</p>
-                <p className="text-muted-foreground text-lg md:text-xl leading-9">Through its partnership with United Technologies Solutions, qBotica established a stronger digital foundation that supports continued growth, improved discoverability, and increased lead-generation opportunities.</p>
+              <div className="space-y-4">
+                <p className="text-muted-foreground text-base md:text-lg leading-9">Organic search continues to be one of the most valuable channels for long-term business growth.</p>
+                <p className="text-muted-foreground text-base md:text-lg leading-9">As competition within the technology and automation sector increases, maintaining strong search visibility remains essential for attracting new customers and expanding market reach.</p>
+                <p className="text-muted-foreground text-base md:text-lg leading-9">Through its partnership with United Technologies Solutions, qBotica established a stronger digital foundation that supports continued growth, improved discoverability, and increased lead-generation opportunities.</p>
               </div>
             </div>
           </motion.div>
@@ -416,14 +450,12 @@ const TransportationCaseStudy = () => {
           {/* ── Conclusion ───────────────────────────────────── */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
             <SectionLabel>Conclusion</SectionLabel>
-            <div className="relative rounded-3xl border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl p-10 md:p-12 hover:border-primary/30 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,119,5,0.1)] transition-all duration-500 group">
+            <div className="glass-card relative rounded-3xl border border-primary/10 p-8 md:p-10 hover:border-primary/30 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,119,5,0.1)] transition-all duration-500 group">
               <div className="absolute inset-x-0 top-0 h-[1px] rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold text-primary border border-primary/20 bg-primary/[0.08] mb-7">✓</div>
-              <h2 className="text-3xl font-bold text-primary mb-8">Conclusion</h2>
-              <div className="space-y-5">
-                <p className="text-muted-foreground text-lg md:text-xl leading-9">The qBotica SEO campaign demonstrates how a structured, data-driven SEO strategy can transform online visibility and generate measurable business results.</p>
-                <p className="text-muted-foreground text-lg md:text-xl leading-9">By addressing technical challenges, improving content quality, strengthening authority, and enhancing user experience, United Technologies Solutions helped qBotica achieve substantial improvements in traffic, rankings, lead generation, and return on investment.</p>
-                <p className="text-muted-foreground text-lg md:text-xl leading-9">The results highlight the long-term value of strategic SEO and its ability to create sustainable growth in competitive industries.</p>
+              <div className="space-y-4">
+                <p className="text-muted-foreground text-base md:text-lg leading-9">The qBotica SEO campaign demonstrates how a structured, data-driven SEO strategy can transform online visibility and generate measurable business results.</p>
+                <p className="text-muted-foreground text-base md:text-lg leading-9">By addressing technical challenges, improving content quality, strengthening authority, and enhancing user experience, United Technologies Solutions helped qBotica achieve substantial improvements in traffic, rankings, lead generation, and return on investment.</p>
+                <p className="text-muted-foreground text-base md:text-lg leading-9">The results highlight the long-term value of strategic SEO and its ability to create sustainable growth in competitive industries.</p>
               </div>
             </div>
           </motion.div>
@@ -444,3 +476,4 @@ const TransportationCaseStudy = () => {
 };
 
 export default TransportationCaseStudy;
+
