@@ -13,12 +13,7 @@ const caseStudies = [
       "Improved search visibility and patient inquiries for a healthcare client.",
     link: "/case-studies/healthcare-seo-growth",
   },
-  {
-    title: "Manufacturing Traffic Boost",
-    description:
-      "Scaled organic traffic and improved keyword rankings for manufacturing services.",
-    link: "/case-studies/manufacturing-seo-growth",
-  },
+ 
 ];
 
 const CaseStudiesSection = () => {
@@ -42,7 +37,7 @@ const CaseStudiesSection = () => {
 
         {/* Cards */}
         {/* Cards */}
-<div className="grid md:grid-cols-3 gap-8">
+<div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
 
   {caseStudies.map((study, index) => (
     <motion.div
