@@ -147,7 +147,7 @@ const Cart = () => {
                     </button>
 
                     <div className="mt-5 pt-4 border-t border-border text-xs text-muted-foreground space-y-1.5">
-                      <p>🔒 Secure checkout powered by Stripe</p>
+                      <p>🔒 Secure checkout powered by Razorpay</p>
                       <p>✓ 256-bit SSL encryption</p>
                       {/* <p>✓ 30-day money-back guarantee</p> */}
                     </div>

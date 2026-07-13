@@ -1,11 +1,11 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { ShieldCheck, Lock, ArrowLeft, CreditCard, AlertCircle, CheckCircle2, ExternalLink } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart, type CartItem } from "@/context/CartContext";
-import { STRIPE_PRICE_IDS } from "@/config/stripe";
+import { getPaymentButtonLabel, getPaymentProvider, type PaymentProvider, getRazorpayPaymentLink } from "@/lib/payment";
 
 interface BillingForm {
   name: string;
@@ -18,29 +18,6 @@ type CheckoutState = {
   buyNowItem?: Omit<CartItem, "quantity">;
 };
 
-type CheckoutSessionResponse = {
-  url?: string;
-  error?: string;
-};
-
-const parseCheckoutSessionResponse = async (response: Response) => {
-  const responseText = await response.text();
-
-  if (responseText.trimStart().startsWith("<?php")) {
-    throw new Error(
-      "Server is returning PHP source code instead of executing it. Enable PHP for create-checkout-session.php on your server."
-    );
-  }
-
-  try {
-    return JSON.parse(responseText) as CheckoutSessionResponse;
-  } catch {
-    throw new Error(
-      responseText.trim() || "Server returned an invalid response while creating Stripe checkout."
-    );
-  }
-};
-
 const Checkout = () => {
   const { items } = useCart();
   const navigate = useNavigate();
@@ -49,11 +26,9 @@ const Checkout = () => {
   const inView = useInView(ref, { once: true });
 
   const buyNowItem = (location.state as CheckoutState | null)?.buyNowItem;
-  // Refresh priceIds from current config — cart in localStorage may have stale values
   const checkoutItems: CartItem[] = (buyNowItem ? [{ ...buyNowItem, quantity: 1 }] : items).map(
     (item) => ({
       ...item,
-      priceId: STRIPE_PRICE_IDS[item.id as keyof typeof STRIPE_PRICE_IDS] ?? item.priceId,
     })
   );
   const checkoutTotal = checkoutItems.reduce(
@@ -68,6 +43,14 @@ const Checkout = () => {
     country: "US",
   });
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const paymentProvider: PaymentProvider = getPaymentProvider("razorpay");
+  const paymentProviderLabel = "Razorpay";
+  const paymentButtonText = getPaymentButtonLabel(
+    paymentProvider,
+    checkoutTotal,
+    paymentProvider === "razorpay" ? "INR" : "USD"
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -76,9 +59,6 @@ const Checkout = () => {
     setError(null);
   };
 
-  const priceIdsConfigured = checkoutItems.every(
-    (item) => item.priceId && !item.priceId.includes("REPLACE_WITH")
-  );
   const duplicatePriceIdItems = checkoutItems.filter(
     (item, index, allItems) =>
       allItems.findIndex((candidate) => candidate.priceId === item.priceId) !== index
@@ -93,61 +73,40 @@ const Checkout = () => {
       return;
     }
 
-    if (!priceIdsConfigured) {
-      setError(
-        "Stripe Price IDs are not configured yet. Please add your Stripe Price IDs to src/config/stripe.ts."
-      );
-      return;
-    }
-
     if (duplicatePriceIdItems.length > 0) {
       const duplicatePackages = duplicatePriceIdItems.map((item) => item.name).join(", ");
       setError(
-        `Duplicate Stripe Price IDs found for: ${duplicatePackages}. Each package must have its own Stripe recurring price ID in src/config/stripe.ts.`
+        `Duplicate package IDs found for: ${duplicatePackages}. Each package must have a unique ID.`
       );
       return;
     }
 
+    setIsSubmitting(true);
+
     try {
-      const response = await fetch("/create-checkout-session.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer: {
-            name: form.name,
-            email: form.email,
-            company: form.company,
-            country: form.country,
-          },
-          order: {
-            items: checkoutItems.map((item) => ({
-              id: item.id,
-              name: item.name,
-              priceId: item.priceId,
-              quantity: item.quantity,
-            })),
-            successUrl: `${window.location.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancelUrl: `${window.location.origin}/checkout`,
-          },
-        }),
-      });
+      if (paymentProvider === "razorpay") {
+        const paymentLink = getRazorpayPaymentLink(
+          checkoutItems.map((item) => ({ id: item.id, name: item.name }))
+        );
 
-      const data = await parseCheckoutSessionResponse(response);
+        if (!paymentLink || paymentLink.includes("your-")) {
+          throw new Error("Razorpay payment links are not configured yet. Add your Razorpay payment link URL in src/lib/payment.ts.");
+        }
 
-      if (!response.ok || !data.url) {
-        throw new Error(data.error || "Could not create Stripe checkout session.");
+        sessionStorage.setItem("razorpay_checkout_pending", "1");
+        window.location.href = paymentLink;
+        return;
       }
 
-      sessionStorage.setItem("stripe_checkout_pending", "1");
-      window.location.href = data.url;
+      throw new Error("Razorpay payment links are not configured yet. Add your Razorpay payment link URL in src/lib/payment.ts.");
     } catch (checkoutError) {
       setError(
         checkoutError instanceof Error
           ? checkoutError.message
-          : "Could not start Stripe checkout."
+          : "Could not start payment checkout."
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -197,39 +156,6 @@ const Checkout = () => {
               <Lock className="w-7 h-7 text-primary" />
               Secure Checkout
             </h1>
-
-            {/* Setup instructions banner */}
-            {!priceIdsConfigured && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="rounded-xl border border-yellow-500/40 bg-yellow-500/10 p-5 mb-6 text-sm"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <AlertCircle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
-                  <p className="font-semibold text-yellow-300">
-                    Action required: Add your Stripe Price IDs
-                  </p>
-                </div>
-                <ol className="text-yellow-200/80 space-y-1.5 pl-8 list-decimal">
-                  <li>
-                    Go to{" "}
-                    <a
-                      href="https://dashboard.stripe.com/products"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline inline-flex items-center gap-1 hover:text-yellow-200"
-                    >
-                      Stripe Dashboard → Products
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </li>
-                  <li>Create one recurring price for each package in Stripe.</li>
-                  <li>Copy each <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">price_...</code> value.</li>
-                  <li>Paste them into <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">src/config/stripe.ts</code> under <code className="bg-yellow-500/20 px-1.5 py-0.5 rounded text-xs">STRIPE_PRICE_IDS</code>.</li>
-                </ol>
-              </motion.div>
-            )}
 
             <div className="grid md:grid-cols-5 gap-8">
               {/* Billing form */}
@@ -327,7 +253,7 @@ const Checkout = () => {
                     </h2>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    You will be securely redirected to Stripe's hosted payment page to complete your purchase. We never store your card details.
+                    You will complete the payment securely through {paymentProviderLabel}. We never store your card details.
                   </p>
                 </div>
 
@@ -344,10 +270,11 @@ const Checkout = () => {
 
                 <button
                   type="submit"
-                  className="glow-button w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl font-bold text-base flex items-center justify-center gap-3 hover:bg-primary/90 transition-all"
+                  disabled={isSubmitting}
+                  className="glow-button w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl font-bold text-base flex items-center justify-center gap-3 hover:bg-primary/90 transition-all disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <Lock className="w-5 h-5" />
-                  Pay ${checkoutTotal.toLocaleString()} / mo with Stripe
+                  {paymentButtonText}
                   <ExternalLink className="w-4 h-4 opacity-70" />
                 </button>
               </form>
@@ -391,7 +318,7 @@ const Checkout = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
-                      PCI DSS compliant via Stripe
+                      PCI DSS compliant via Razorpay
                     </div>
                     {/* <div className="flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
@@ -406,7 +333,7 @@ const Checkout = () => {
                   <div className="mt-5 pt-4 border-t border-border">
                     <p className="text-xs text-muted-foreground/60 text-center">
                       Powered by{" "}
-                      <span className="text-muted-foreground font-medium">Stripe</span>
+                      <span className="text-muted-foreground font-medium">{paymentProviderLabel}</span>
                     </p>
                   </div>
                 </div>

@@ -19,17 +19,17 @@ const CheckoutSuccess = () => {
   const redirectStatus = searchParams.get("redirect_status");
   const paymentIntent = searchParams.get("payment_intent");
   const setupIntent = searchParams.get("setup_intent");
-  const pending = sessionStorage.getItem("stripe_checkout_pending") === "1";
-  const hasStripeSuccessSignal =
+  const pending = sessionStorage.getItem("razorpay_checkout_pending") === "1";
+  const hasPaymentSuccessSignal =
     Boolean(sessionId) ||
     redirectStatus === "succeeded" ||
     Boolean(paymentIntent) ||
     Boolean(setupIntent);
 
-  // Payment Links can redirect to success URL without always including session_id,
-  // so we accept success route + pending checkout flag as a valid completion signal.
+  // Razorpay redirects can land on the success route without always including a query signal,
+  // so we accept the success route + pending checkout flag as a valid completion signal.
   const verifiedSuccessOnLoad = Boolean(
-    pending && (hasStripeSuccessSignal || location.pathname === "/checkout/success")
+    pending && (hasPaymentSuccessSignal || location.pathname === "/checkout/success")
   );
   const [isVerifiedSuccess] = useState(verifiedSuccessOnLoad);
   const emailSentRef = useRef(false);
@@ -37,7 +37,7 @@ const CheckoutSuccess = () => {
   useEffect(() => {
     if (!isVerifiedSuccess) return;
     clearCart();
-    sessionStorage.removeItem("stripe_checkout_pending");
+    sessionStorage.removeItem("razorpay_checkout_pending");
   }, [isVerifiedSuccess, clearCart]);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const CheckoutSuccess = () => {
           ) : (
             <>
               <p className="text-muted-foreground mb-2">
-                We could not verify a successful Stripe payment for this visit.
+                We could not verify a successful payment for this visit.
               </p>
               <p className="text-sm text-muted-foreground/70 mb-8">
                 Your cart is still saved. Please return to checkout and complete payment.

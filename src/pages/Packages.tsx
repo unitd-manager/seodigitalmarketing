@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
-import { STRIPE_PRICE_IDS } from "@/config/stripe";
-
+ 
 const packages = [
   {
     id: "starter",
@@ -14,7 +13,6 @@ const packages = [
     tagline: "Perfect for small businesses",
     price: 499,
     billing: "monthly" as const,
-    priceId: STRIPE_PRICE_IDS.starter,
     icon: Zap,
     color: "from-blue-500/20 to-blue-600/10",
     border: "border-blue-500/30 hover:border-blue-500/60",
@@ -41,7 +39,6 @@ const packages = [
     tagline: "For businesses ready to scale",
     price: 999,
     billing: "monthly" as const,
-    priceId: STRIPE_PRICE_IDS.growth,
     icon: TrendingUp,
     color: "from-primary/20 to-primary/10",
     border: "border-primary/60 hover:border-primary",
@@ -67,7 +64,6 @@ const packages = [
     tagline: "Full-service SEO domination",
     price: 1999,
     billing: "monthly" as const,
-    priceId: STRIPE_PRICE_IDS.dominator,
     icon: Crown,
     color: "from-purple-500/20 to-purple-600/10",
     border: "border-purple-500/30 hover:border-purple-500/60",
@@ -206,7 +202,7 @@ const Packages = () => {
       name: pkg.name,
       price: pkg.price,
       billing: pkg.billing,
-      priceId: pkg.priceId,
+      priceId: "",
     });
   };
 
@@ -216,7 +212,7 @@ const Packages = () => {
       name: pkg.name,
       price: pkg.price,
       billing: pkg.billing,
-      priceId: pkg.priceId,
+      priceId: "",
     });
     navigate("/checkout");
   };
@@ -282,7 +278,7 @@ const Packages = () => {
             {[
               "✓ Cancel anytime",
               "✓ No setup fees",
-              "✓ Secure payment via Stripe",
+              "✓ Secure payment via Razorpay",
               "✓ Results guaranteed",
               "✓ 30-day money-back",
             ].map((badge) => (

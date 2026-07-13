@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { Check, ShoppingCart, Zap, TrendingUp, Crown, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
-import { STRIPE_PRICE_IDS } from "@/config/stripe";
 
 const packages = [
 {
@@ -80,7 +79,6 @@ const packages = [
   tagline: "Thought leadership & target outreach",
   price: 240,
   billing: "monthly" as const,
-  priceId: STRIPE_PRICE_IDS.starter,
   icon: TrendingUp,
   color: "from-blue-400/20 to-cyan-500/10",
   border: "border-cyan-500/30 hover:border-cyan-500/60",
@@ -104,7 +102,6 @@ const packages = [
   tagline: "Multi-platform organic brand growth",
   price: 240,
   billing: "monthly" as const,
-  priceId: STRIPE_PRICE_IDS.growth,
   icon: Zap,
   color: "from-pink-500/20 to-orange-500/10",
   border: "border-pink-500/30 hover:border-pink-500/60",
@@ -128,7 +125,6 @@ const packages = [
   tagline: "ROI-focused targeted ad campaigns",
   price: 135,
   billing: "monthly" as const,
-  priceId: STRIPE_PRICE_IDS.dominator,
   icon: Crown,
   color: "from-green-500/20 to-emerald-600/10",
   border: "border-green-500/30 hover:border-green-500/60",
@@ -159,7 +155,7 @@ const PricingSection = () => {
       name: pkg.name,
       price: pkg.price,
       billing: pkg.billing,
-      priceId: pkg.priceId,
+      priceId: "",
     });
   };
 
@@ -171,7 +167,7 @@ const PricingSection = () => {
           name: pkg.name,
           price: pkg.price,
           billing: pkg.billing,
-          priceId: pkg.priceId,
+          priceId: "",
         },
       },
     });
@@ -327,7 +323,7 @@ const PricingSection = () => {
         >
           {[
             "✓ No setup fees",
-            "✓ Secure payment via Stripe",
+            "✓ Secure payment via Razorpay",
             "✓ Results guaranteed"
           ].map((badge) => (
             <span key={badge} className="flex items-center gap-6 px-4 py-2  roundedfull text-sm  borner border-border">{badge}</span>
