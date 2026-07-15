@@ -3,7 +3,7 @@ export type PaymentProvider = "razorpay";
 export const DEFAULT_PAYMENT_PROVIDER: PaymentProvider = "razorpay";
 
 export const RAZORPAY_PAYMENT_LINKS: Record<string, string> = {
-  "seo-basic": "https://rzp.io/rzp/dIi6MbA",
+  "seo-basic": "https://rzp.io/rzp/BIwQckj",
   "seo-professional": "https://rzp.io/rzp/lfGjkJDJ",
   "seo-premium": "https://rzp.io/rzp/jmis3cfv",
   "linkedin-branding": "https://rzp.io/rzp/ckW81wm",

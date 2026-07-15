@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { ShieldCheck, Lock, ArrowLeft, CreditCard, AlertCircle, CheckCircle2, ExternalLink } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart, type CartItem } from "@/context/CartContext";
 import { getPaymentButtonLabel, getPaymentProvider, type PaymentProvider, getRazorpayPaymentLink } from "@/lib/payment";
+import RazorpayPaymentButton from "@/components/RazorpayPaymentButton";
 
 interface BillingForm {
   name: string;
@@ -44,6 +45,16 @@ const Checkout = () => {
   });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Save form data and checkout items to sessionStorage whenever they change
+  useEffect(() => {
+    if (form.name.trim() && form.email.trim()) {
+      sessionStorage.setItem("checkout_form_data", JSON.stringify(form));
+      sessionStorage.setItem("checkout_items", JSON.stringify(checkoutItems));
+      sessionStorage.setItem("checkout_total", JSON.stringify(checkoutTotal));
+      sessionStorage.setItem("razorpay_checkout_pending", "1");
+    }
+  }, [form, checkoutItems, checkoutTotal]);
   const paymentProvider: PaymentProvider = getPaymentProvider("razorpay");
   const paymentProviderLabel = "Razorpay";
   const paymentButtonText = getPaymentButtonLabel(
@@ -93,7 +104,12 @@ const Checkout = () => {
           throw new Error("Razorpay payment links are not configured yet. Add your Razorpay payment link URL in src/lib/payment.ts.");
         }
 
+        // Save checkout data to sessionStorage
         sessionStorage.setItem("razorpay_checkout_pending", "1");
+        sessionStorage.setItem("checkout_form_data", JSON.stringify(form));
+        sessionStorage.setItem("checkout_items", JSON.stringify(checkoutItems));
+        sessionStorage.setItem("checkout_total", JSON.stringify(checkoutTotal));
+        
         window.location.href = paymentLink;
         return;
       }
@@ -268,15 +284,19 @@ const Checkout = () => {
                   </motion.div>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="glow-button w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl font-bold text-base flex items-center justify-center gap-3 hover:bg-primary/90 transition-all disabled:cursor-not-allowed disabled:opacity-70"
-                >
-                  <Lock className="w-5 h-5" />
-                  {paymentButtonText}
-                  <ExternalLink className="w-4 h-4 opacity-70" />
-                </button>
+                {checkoutItems.length === 1 && checkoutItems[0].id === "seo-basic" ? (
+                  <RazorpayPaymentButton paymentButtonId="pl_TDgyjg3Ma2eZaG" />
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="glow-button w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl font-bold text-base flex items-center justify-center gap-3 hover:bg-primary/90 transition-all disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    <Lock className="w-5 h-5" />
+                    {paymentButtonText}
+                    <ExternalLink className="w-4 h-4 opacity-70" />
+                  </button>
+                )}
               </form>
 
               {/* Order summary sidebar */}

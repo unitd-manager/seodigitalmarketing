@@ -11,6 +11,13 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import NotFound from "./pages/NotFound";
 import TransportationCaseStudy from "./pages/case-studies/TransportationCaseStudy";
 import HealthcareCaseStudy from "./pages/case-studies/HealthcareCaseStudy";
+import {
+  PrivacyPolicyPage,
+  TermsAndConditionsPage,
+  RefundPolicyPage,
+  ContactPage,
+  AboutPage,
+} from "./pages/InformationalPage";
 //import ManufacturingCaseStudy from "./pages/case-studies/ManufacturingCaseStudy";
 import { CartProvider } from "./context/CartContext";
 
@@ -26,6 +33,11 @@ const AppRoutes = () => {
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/checkout/success" element={<CheckoutSuccess />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+      <Route path="/refund-policy" element={<RefundPolicyPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/about" element={<AboutPage />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route
       path="/case-studies/transportation-seo-growth"

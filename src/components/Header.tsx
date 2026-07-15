@@ -16,6 +16,15 @@ const Header = () => {
 
   const isHome = location.pathname === "/";
 
+  const navItems = [
+    "Services",
+    "Process",
+    "About",
+    "Testimonials",
+    "Case Studies",
+    "Pricing",
+  ];
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
@@ -48,16 +57,6 @@ const Header = () => {
 
   return () => window.removeEventListener("scroll", handleScroll);
 }, []);
-  const navItems = [
-
-  "Services",
-  "Process",
-  "About",
-  "Testimonials",
-  "Case Studies",
-  "Pricing",
-];
-
   return (
     <motion.header
       initial={{ y: -80 }}
@@ -89,29 +88,29 @@ const Header = () => {
 
         {/* Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {isHome &&
-            navItems.map((item) => {
-              const sectionId = item.toLowerCase().replace(/\s+/g, "-");
+          {navItems.map((item) => {
+            const sectionId = item.toLowerCase().replace(/\s+/g, "-");
+            const isActive = isHome && activeSection === sectionId;
+            const href = item === "About" ? "/about" : isHome ? `#${sectionId}` : `/#${sectionId}`;
 
-            const isActive = activeSection === sectionId;
-              return (
-                <a
-                  key={item}
-                  href={`#${sectionId}`}
-                  className={`
-          text-sm uppercase tracking-[2px]
-          transition-all duration-200 cursor-pointer
-          ${
-  isActive
-    ? "text-[#fbb323] drop-shadow-[0_0_18px_#fbb323] font-semibold"
-    : "text-muted-foreground hover:text-[#fbb323] hover:drop-shadow-[0_0_12px_#fbb323]"
-}
-        `}
-                >
-                  {item}
-                </a>
-              );
-            })}
+            return (
+              <a
+                key={item}
+                href={href}
+                className={`
+                  text-sm uppercase tracking-[2px]
+                  transition-all duration-200 cursor-pointer
+                  ${
+                    isActive
+                      ? "text-[#fbb323] drop-shadow-[0_0_18px_#fbb323] font-semibold"
+                      : "text-muted-foreground hover:text-[#fbb323] hover:drop-shadow-[0_0_12px_#fbb323]"
+                  }
+                `}
+              >
+                {item}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Right side */}

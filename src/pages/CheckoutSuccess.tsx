@@ -5,6 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
+import emailjs from "@emailjs/browser";
+
+// Initialize EmailJS
+emailjs.init("CYGz-4ZrPq7oVsO_4");
 
 const CheckoutSuccess = () => {
   const navigate = useNavigate();
@@ -41,16 +45,60 @@ const CheckoutSuccess = () => {
   }, [isVerifiedSuccess, clearCart]);
 
   useEffect(() => {
-    if (!isVerifiedSuccess || !sessionId || emailSentRef.current) return;
+    if (!isVerifiedSuccess || emailSentRef.current) return;
     emailSentRef.current = true;
-    fetch("/send-confirmation.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ session_id: sessionId }),
-    }).catch(() => {
-      // Email errors are non-fatal — order is already complete
-    });
-  }, [isVerifiedSuccess, sessionId]);
+
+    // Clear cart first
+    clearCart();
+
+    // Retrieve saved checkout data
+    const formDataStr = sessionStorage.getItem("checkout_form_data");
+    const itemsStr = sessionStorage.getItem("checkout_items");
+    const totalStr = sessionStorage.getItem("checkout_total");
+
+    if (formDataStr && itemsStr && totalStr) {
+      const formData = JSON.parse(formDataStr);
+      const items = JSON.parse(itemsStr);
+      const total = JSON.parse(totalStr);
+
+      // Format the order items
+      const orderItemsText = items
+        .map((item: any) => `${item.name} x ${item.quantity} - $${(item.price * item.quantity).toLocaleString()}`)
+        .join("\n");
+
+      // Send email only to customer
+      emailjs.send(
+        "service_5frfgck",
+        "template_l5j3f6k",
+        {
+          name: formData.name,
+          website: "N/A",
+          email: formData.email,
+          to_name: formData.name,
+          customer_name: formData.name,
+          customer_email: formData.email,
+          customer_company: formData.company || "N/A",
+          customer_country: formData.country,
+          order_items: orderItemsText,
+          order_total: `$${total.toLocaleString()}`
+        }
+      ).catch((error) => {
+        console.error("Email sending failed:", error);
+      }).finally(() => {
+        // Clear all session storage items
+        sessionStorage.removeItem("razorpay_checkout_pending");
+        sessionStorage.removeItem("checkout_form_data");
+        sessionStorage.removeItem("checkout_items");
+        sessionStorage.removeItem("checkout_total");
+      });
+    } else {
+      // Clear session storage even if no data found
+      sessionStorage.removeItem("razorpay_checkout_pending");
+      sessionStorage.removeItem("checkout_form_data");
+      sessionStorage.removeItem("checkout_items");
+      sessionStorage.removeItem("checkout_total");
+    }
+  }, [isVerifiedSuccess, clearCart]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
