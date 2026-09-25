@@ -66,7 +66,7 @@ export const PrivacyPolicyPage = () => (
           <div className="space-y-2">
             <p><strong>United Technologies Solutions</strong></p>
             <p>Email: <a className="text-primary underline" href="mailto:admin@unitdtechnologies.com">admin@unitdtechnologies.com</a></p>
-            <p>Phone: <a className="text-primary underline" href="tel:+919444207357">+91 94442 07357</a></p>
+            <p>Phone: <a className="text-primary underline" href="tel:+15869268377">+1 586 926 8377</a></p>
             <p>Website: <a className="text-primary underline" href="https://seo.unitdtechnologies.com">https://seo.unitdtechnologies.com</a></p>
           </div>
         ),
@@ -307,11 +307,12 @@ export const ContactPage = () => {
             <div className="space-y-3">
               <p><strong>Company:</strong> United Technologies Solutions</p>
               <p><strong>Email:</strong> <a className="text-primary underline" href="mailto:admin@unitdtechnologies.com">admin@unitdtechnologies.com</a></p>
-              <p><strong>Phone:</strong> <a className="text-primary underline" href="tel:+919444207357">+91 94442 07357</a></p>
-              <p><strong>Business Address:</strong></p>
-              <p>United Technologies Solutions</p>
-              <p>Chennai, Tamil Nadu</p>
-              <p>India</p>
+              <p><strong>Phone:</strong> <a className="text-primary underline" href="tel:+15869268377">+1 586 926 8377</a></p>
+              <p><strong>US Contact Address:</strong></p>
+      
+              <p>5067 Rivera Drive Southwest<br/>
+                 Grandville, Michigan 49418 <br/>
+                 United States</p>
             </div>
           ),
         },

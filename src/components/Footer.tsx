@@ -16,7 +16,7 @@ const Footer = () => (
       <div className="max-w-sm">
         <p className="font-display font-semibold text-foreground">United Technologies Solutions</p>
         <p className="mt-2 text-sm text-muted-foreground">Digital Marketing & SEO Services</p>
-        <p className="mt-1 text-sm text-muted-foreground">India</p>
+        <p className="mt-1 text-sm text-muted-foreground">United States</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
